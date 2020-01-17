@@ -3,18 +3,11 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var mongoose = require('mongoose');
 require('dotenv').config();
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var pointsRouter = require('./routes/interestPoints');
-
-var options = {
-  useUnifiedTopology: true,
-  useNewUrlParser: true
-}
-mongoose.connect(process.env.MONGO_KEY, options);
 
 var app = express();
 

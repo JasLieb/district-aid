@@ -1,5 +1,4 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var db = require('../factories/databaseFactory');
 
 var schema = {
     type: String,
@@ -15,6 +14,6 @@ var schema = {
     }
 };
 
-var interestPointModel = new Schema(schema);
+var interestPointModel = new db.Schema(schema);
 
-module.exports = mongoose.model('InterestPoint', interestPointModel, 'InterestPoints');
+module.exports = db.mongoose.model('InterestPoint', interestPointModel, 'InterestPoints');
