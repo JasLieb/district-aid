@@ -1,0 +1,15 @@
+matrix:
+  include:
+    - language: node_js
+      node_js:
+        - "lts/*"
+
+      before_script:
+        - cd Back/
+
+      script:
+        - npm install
+        - npm test
+
+notifiations:
+  email: false
