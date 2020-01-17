@@ -1,6 +1,6 @@
 require('dotenv').config();
 var assert = require('assert');
-var InterestPointFactory = require('../factories/InterestPointsFactory');
+var InterestPointFactory = require('../factories/interestPointsFactory');
 
 describe('InterestPoints factory', () => {
     describe('#getInterestPoints()', () => {
