@@ -1,15 +1,14 @@
 matrix:
   include:
-    - language: node_js
-      node_js:
-        - "lts/*"
-
-      before_script:
-        - cd Back/
-
-      script:
-        - npm install
-        - npm test
-
+  - language: node_js
+    node_js:
+    - lts/*
+    before_script:
+    - cd Back/
+    script:
+    - npm install
+    - npm test
 notifiations:
   email: false
+env:
+  secure: vfjwoHSA8aX3es1l0ccc4Jp7ZIuQMxMSY8xDM5vZIwS4Sze+3ikP7TF/qJu6pxz32hM3qtFVvxe0x6es+CgGRAFAM4UKU35cxuB4pb/ZoT3RpaQ8lzEhbu6P+r0QVA16uiir9czeAbC1uAcqC6RUn3oD4iB1kMVEMpDP2RNpuqqa+ivKBpaInTLOv24qkp+a1q7xnK1xjEnYtv3Z7EPrEzfDQe4VaWDteoRvj6Ei4Z4BmiJSr6GMbBtx/q00w9pRIiaADrllmPtCjundthEzNITwx9cYkCj3klV0Mf88mYKQM1Lrm+d7oAK6CQ+WFJWrIpJx2SWDIyILSOUPUN2UXt+HLu6kBLWz/Hg4hfwZTuYtvppW/21CY1nU8tlSU67i/WcUvSeZfy4Rf+UChyED5Go0PBH2DOjPPRz19BLyULORHhHOuR67mfx0LaCEy9Pp3NpXj3CfEC8EQwwmqZx18eyGsxxWdSSS4bKU3TH6WNV3jHeFHSZQKuapRVBDDX3FZGuAGqRT6hpz8wTEeQE8zLWyN71k322zA+fUClxsFY/b0XmUVIBvnDbz2XcETnkXcaDnwezYqy+hmH5w/HsH+/2i1NuikDLbNuzkF1FlEuJQkDtz9K3e6/1ow05pk075EhiozjpnFreTe7XpuFsxC5uS8A4tq0Nbaym6KILIdyk=
