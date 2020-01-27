@@ -7,8 +7,6 @@ jobs:
     - 10
     before_script:
     - cd Back/
-    - ls -al
-    - 
     script:
     - npm install
     - npm test
