@@ -1,4 +1,6 @@
 NODE_ENV=development
 PORT=3000
+# Set your JTW secret key information here
+JWTSECRETKEY=
 # Set your database connection information here
 MONGO_KEY=
