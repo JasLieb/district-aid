@@ -3,8 +3,8 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
 var createNewUser = async (userData) => {
-    var user = new User(userData);
     try {
+        var user = new User(userData);
         return await newAuthToken(user);
     } catch (e) {
         throw e;
