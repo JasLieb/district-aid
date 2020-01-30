@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const authentification = require('../middlewares/authentification');
-const {ObjectID}  = require('mongodb')
 var usersFactory = require('../factories/usersFactory');
 
 /* GET users listing. */
@@ -18,9 +17,13 @@ router.post('/register', async function (req, res, next) {
   }
 });
 
-router.post('/login', authentification, function (req, res, next) {
-  //usersFactory.make
-  res.end();
+router.post('/login', authentification, async function (req, res, next) {
+  try {
+    var user = await usersFactory.login(req.body);
+    res.status(200).end()
+  } catch (error) {
+    next(error)  ;
+  }
 });
 
 module.exports = router;

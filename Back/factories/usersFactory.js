@@ -5,8 +5,7 @@ const bcrypt = require('bcryptjs');
 var createNewUser = async (userData) => {
     var user = new User(userData);
     try {
-        const token = await newAuthToken(user);
-        return token;
+        return await newAuthToken(user);
     } catch (e) {
         throw e;
     }
@@ -24,6 +23,35 @@ var newAuthToken = async (user) => {
     return token;
 }
 
+var login = async (user) => {
+    try {
+        var userFound = await User.findOne({'email': user.email});
+        var match = await bcrypt.compare(user.password, userFound.password);
+
+        if(!match) {
+            throw new Error('401 : NotConnected');
+        }
+
+        userFound = addNewToken(userFound);
+        return userFound;
+    } catch (error) {
+        throw error;
+    }
+}
+
+/// TODO Tokens expiration date verification
+var addNewToken = async (user) => {
+    const token = jwt.sign({ _id: user.id.toString() }, process.env.JWTSECRETKEY, { expiresIn: "7 days" });
+    user.tokens = user.tokens.concat({token});
+    try {
+        await user.save();
+        return user;
+    } catch (error) {
+        throw error;
+    }
+}
+
 module.exports = {
-    createNewUser
+    createNewUser,
+    login
 };
