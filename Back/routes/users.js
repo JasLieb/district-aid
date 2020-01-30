@@ -19,8 +19,8 @@ router.post('/register', async function (req, res, next) {
 
 router.post('/login', authentification, async function (req, res, next) {
   try {
-    var user = await usersFactory.login(req.body);
-    res.status(200).end()
+    var token = req.token || await usersFactory.login(req.body);
+    res.status(200).send(token).end();
   } catch (error) {
     next(error)  ;
   }

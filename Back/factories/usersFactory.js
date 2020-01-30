@@ -32,8 +32,8 @@ var login = async (user) => {
             throw new Error('401 : NotConnected');
         }
 
-        userFound = addNewToken(userFound);
-        return userFound;
+        userFound = await addNewToken(userFound);
+        return userFound.tokens.slice(-1)[0];
     } catch (error) {
         throw error;
     }
