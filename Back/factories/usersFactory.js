@@ -41,7 +41,7 @@ var login = async (user) => {
 
 /// TODO Tokens expiration date verification
 var addNewToken = async (user) => {
-    const token = jwt.sign({ _id: user.id.toString() }, process.env.JWTSECRETKEY, { expiresIn: "7 days" });
+    const token = jwt.sign({ _id: user._id.toString() }, process.env.JWTSECRETKEY, { expiresIn: "7 days" });
     user.tokens = user.tokens.concat({token});
     try {
         await user.save();
