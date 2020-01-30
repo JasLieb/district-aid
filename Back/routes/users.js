@@ -9,9 +9,13 @@ router.get('/', function(req, res, next) {
   res.end();
 });
 
-router.post('/register', function (req, res, next) {
-  usersFactory.createNewUser(req.body);
-  res.end();
+router.post('/register', async function (req, res, next) {
+  try {
+    var token = await usersFactory.createNewUser(req.body);
+    res.status(200).send({token}).end();
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.post('/login', authentification, function (req, res, next) {

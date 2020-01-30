@@ -21,20 +21,17 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/points', pointsRouter);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
-
 // error handler
+// TODO Log system into files one for errors, for auth, login ...
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.locals.error = process.env.NODE_ENV === 'development' ? err : {};
 
   // render the error page
   console.log(err);
   res.status(err.status || 500);
+  res.send(err);
   res.end();
 });
 
