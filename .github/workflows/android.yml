@@ -15,9 +15,12 @@ jobs:
     - uses: subosito/flutter-action@v1
       with:
         flutter-version: '1.7.8+hotfix.4'
-    - name: Flutter__GetDependencies
+    - name: Flutter__Pub__Get
       working-directory: ./Front
       run: flutter pub get
+    - name: Flutter__Upgrade
+      working-directory: ./Front
+      run: flutter upgrade
     - name: Flutter__Test
       working-directory: ./Front
       run: flutter test
@@ -28,3 +31,4 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         artifacts: "Front/build/app/outputs/apk/debug/*.apk"
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
