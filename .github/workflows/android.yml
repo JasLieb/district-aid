@@ -3,6 +3,8 @@ on:
   push:
     tags:
       - '!refs/tags/*'
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 jobs:
   build:
     name: Build APK
