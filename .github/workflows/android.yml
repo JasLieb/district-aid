@@ -1,9 +1,9 @@
 on: push
-tags: "v0.1"
 name: Test, Build and Release apk
 jobs:
   build:
     name: Build APK
+    tags: "v0.1"
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
