@@ -32,8 +32,6 @@ jobs:
       working-directory: ./Front
       run: flutter build apk --debug --split-per-abi
     - name: Create a Release APK
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       uses: ncipollo/release-action@v1
       with:
         artifacts: "Front/build/app/outputs/apk/debug/*.apk"
