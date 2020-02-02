@@ -1,4 +1,5 @@
 on: push
+tags: "v0.1"
 name: Test, Build and Release apk
 jobs:
   build:
