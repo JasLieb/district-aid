@@ -44,7 +44,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
+        release_name: nowaste_${{ github.ref }}
         draft: false
         prerelease: false
 
@@ -54,6 +54,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./Front/Android/app/build/outputs/apk/release/${{ steps.create_release.outputs.release_name }}.apk
-        asset_name: nowaste.apk
+        asset_path: ./Front/Android/app/build/outputs/apk/release/nowaste_${{ github.ref }}.apk
+        asset_name: nowaste_${{ github.ref }}.apk
         asset_content_type: application/vnd.android.package-archive
