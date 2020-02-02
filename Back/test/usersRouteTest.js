@@ -62,6 +62,11 @@ describe('/user tests', () => {
             assert.ok(response.status == 200);
             done();
         });
+
+        it('Expect response still have token', (done) => {
+            assert.ok(response.body.token);
+            done();
+        });
     });
 
     describe('#POST /register no errors', () => {
