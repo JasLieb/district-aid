@@ -2,7 +2,10 @@ env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 name: Test, Build and Release apk
 on:
-  push:
+  master:
+    tags:
+      - '!refs/tags/*'
+  pull_request:
     tags:
       - '!refs/tags/*'
 jobs:
