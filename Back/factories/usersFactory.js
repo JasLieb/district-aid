@@ -6,20 +6,12 @@ var createNewUser = async (userData) => {
     try {
         var user = new User(userData);
         user.password = await bcrypt.hash(user.password, 10);
-        return await saveUser(user);
+        user.token = getNewToken(user.id);
+        return await user.save();
+        saveUser(user);
     } catch (e) {
         throw e;
     }
-}
-
-var saveUser = async (user) => {
-    user.token = getNewToken(user.id);
-    try {
-        await user.save();
-    } catch (error) {
-        throw error;
-    }
-    return user.token;
 }
 
 var login = async (user) => {
@@ -29,7 +21,6 @@ var login = async (user) => {
         if(user.password && !await bcrypt.compare(user.password, userFound.password)) {
             throw new Error('401 : NotConnected');
         }
-        
         userFound.token = getNewToken(userFound.id);
         return userFound;
     } catch (error) {
