@@ -37,6 +37,7 @@ jobs:
 
     - name: Generate build number
       id: buildnumber
+      if: github.event_name == 'pull_request'
       uses: einaregilsson/build-number@v2 
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
@@ -48,7 +49,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: ${{ github.ref }}
-        release_name: nowaste-${{ steps.buildnumber.outputs.build_number }}
+        release_name: nowaste-0.${{ steps.buildnumber.outputs.build_number }}
         draft: true
         prerelease: false
 

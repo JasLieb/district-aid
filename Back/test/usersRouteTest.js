@@ -60,8 +60,7 @@ describe('/user tests', () => {
                     if(err) done(err);
                     else {
                         response = res;
-                        done();
-                        
+
                         agent.post('/users/login')
                             .send({
                                 "email": totoEmail,
@@ -90,7 +89,7 @@ describe('/user tests', () => {
         });
 
         after((done) => {
-            User.deleteOne({name: dummyName, email: dummyEmail}, (err) => {
+            User.deleteOne({name: dummyName, email: totoEmail}, (err) => {
                 done(err);
             });
         });
@@ -103,13 +102,12 @@ describe('/user tests', () => {
                 .send({
                     "name": dummyName,
                     "password": totoPassword,
-                    "email": totoPassword
+                    "email": totoEmail
                 })
                 .end((err, res) => {
                     if(err) done(err);
                     else {
                         response = res;
-                        done();
 
                         agent.post('/users/login')
                             .set('Token', response.body.token)
@@ -126,7 +124,6 @@ describe('/user tests', () => {
                             });
                     }
                 });
-
         });
 
         it('Expect response have status 200', (done) => {
@@ -137,6 +134,12 @@ describe('/user tests', () => {
         it('Expect response still have token', (done) => {
             assert.ok(response.body.token);
             done();
+        });
+
+        after((done) => {
+            User.deleteOne({name: dummyName, email: totoEmail}, (err) => {
+                done(err);
+            });
         });
     });
 });
