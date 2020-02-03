@@ -4,142 +4,137 @@ var User = require('../models/userModel');
 var app = require('../app');
 var agent = request.agent(app);
 
+var response;
 const dummyName = "Dummy Foo";
 const dummyEmail = "Dummy.Foo@asylum.io";
 const dummyPassword = "MyP4ZZVV0RDEZ";
-const totoEmail = "totoCfollegue@toto.fr";
-const totoPassword = "totoestlemotdepasse";
+const dummy = {name: dummyName, password: dummyPassword, email: dummyEmail}
 
-
-describe('/user tests', () => {
-    describe('#POST /register no errors', () => {
-        var response;
-        before((done) => {
-            agent.post('/users/register')
-                .send({
-                    "name": dummyName,
-                    "password": dummyPassword,
-                    "email": dummyEmail
-                })
-                .end((err, res) => {
-                    if(err) done(err);
-                    else {
-                        response = res;
-                        done();
-                    }
-                });
-        });
-
-        it('Expect response have status 200', (done) => {
-            assert.ok(response.status == 200);
-            done();
-        });
-
-        it('Expect response have tokens', (done) => {
-            assert.ok(response.body.token);
-            done();
-        });
-
-        after((done) => {
-            User.deleteOne({name: dummyName, email: dummyEmail}, (err) => {
-                done(err);
-            });
+/// Test Helpers
+const regiterDummy = (dummy) => {
+    return new Promise((resolve, error) => {
+        agent.post('/users/register')
+        .send(dummy)
+        .end((err, res) => {
+            response = res;
+            if(err) error(err);
+            else resolve();
         });
     });
-    
-    describe('#POST /login without token', () => {
-        var response;
+}
+
+const loginDummy = () => {
+    return new Promise((resolve, error) => {
+        agent.post('/users/login')
+        .send(dummy)
+        .end((err, res) => {
+            response = res;
+            if(err) error(err);
+            else resolve();
+        });
+    });
+}
+
+const loginDummyWithToken = (token) => {
+    console.log(token);
+    return new Promise((resolve, error) => {
+        agent.post('/users/login')
+        .set('Token', token)
+        .end((err, res) => {
+            if(err) { done(err);}
+            else {
+                response = res;
+                resolve();
+            }
+        });
+    });
+}
+
+const deleteDummy = (dummy) =>
+    new Promise((resolve, error) => {
+        User.deleteOne({name: dummy.name, email: dummy.email}, (err) => {
+            if(err) error(err);
+            else resolve();
+        });
+    });
+
+/// TESTS
+describe('/user tests', () => {
+    describe('#POST /register no errors', () => {
         before((done) => {
-            agent.post('/users/register')
-                .send({
-                    "name": dummyName,
-                    "password": totoPassword,
-                    "email": totoEmail
-                })
-                .end((err, res) => {
-                    if(err) done(err);
-                    else {
-                        response = res;
-
-                        agent.post('/users/login')
-                            .send({
-                                "email": totoEmail,
-                                "password": totoPassword
-                            })
-                            .end((err, res) => {
-                                if(err) { done(err);}
-                                else {
-                                    response = res;
-                                    done();
-                                }
-                            });
-                    }
-                });
-
+            regiterDummy(dummy)
+            .then(done).catch(done);
         });
 
-        it('Expect response have status 200', (done) => {
+        it('POST /register expect response have status 200', (done) => {
             assert.ok(response.status == 200);
             done();
         });
 
-        it('Expect response have token', (done) => {
+        it('POST /register expect response have tokens', (done) => {
             assert.ok(response.body.token);
             done();
         });
 
         after((done) => {
-            User.deleteOne({name: dummyName, email: totoEmail}, (err) => {
-                done(err);
-            });
+            deleteDummy(dummy).then(done).catch(done);
         });
+    });
+
+    describe('#POST /login without token', () => {
+        before(
+            (done) => {
+                regiterDummy(dummy)
+                .then(
+                    _ => {
+                        loginDummy(dummy).then(done).catch();
+                    }
+                )
+                .catch(done)
+            }
+        );
+
+        it('POST /login without token expect response have status 200', (done) => {
+            assert.ok(response.status == 200);
+            done();
+        });
+
+        it('POST /login without token expect response have token', (done) => {
+            assert.ok(response.body.token);
+            done();
+        });
+
+        after(
+            (done) => {
+                deleteDummy(dummy).then(done).catch(done);
+            }
+        );
     });
 
     describe('#POST /login with token', () => {
-        var response;
-        before((done) => {
-            agent.post('/users/register')
-                .send({
-                    "name": dummyName,
-                    "password": totoPassword,
-                    "email": totoEmail
-                })
-                .end((err, res) => {
-                    if(err) done(err);
-                    else {
-                        response = res;
+        before(
+            (done) => {
+                regiterDummy(dummy).then(_ =>{
 
-                        agent.post('/users/login')
-                            .set('Token', response.body.token)
-                            .send({
-                                'email': totoEmail,
-                                'password': totoPassword
-                            })
-                            .end((err, res) => {
-                                if(err) { done(err);}
-                                else {
-                                    response = res;
-                                    done();
-                                }
-                            });
-                    }
-                });
+                    loginDummyWithToken(dummy)
+                    .then(done)
+                    .catch();
+                })
+                .catch(done);
         });
 
-        it('Expect response have status 200', (done) => {
+        it('#POST /login with token expect response have status 200', (done) => {
             assert.ok(response.status == 200);
             done();
         });
 
-        it('Expect response still have token', (done) => {
+        it('#POST /login with token expect response still have token', (done) => {
             assert.ok(response.body.token);
             done();
         });
 
         after((done) => {
-            User.deleteOne({name: dummyName, email: totoEmail}, (err) => {
-                done(err);
-            });
+            deleteDummy(dummy).then(done).catch(done);
         });
     });
 });

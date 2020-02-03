@@ -17,10 +17,10 @@ router.post('/register', async function (req, res, next) {
   }
 });
 
-router.post('/login', authentification, async function (req, res, next) {
+router.post('/login', async function (req, res, next) {
   try {
-    var token = req.token || await usersFactory.login(req.body);
-    res.status(200).send(token).end();
+    var token = await authentification(req.header('Authorization')) || await usersFactory.login(req.body);
+    res.status(200).send({token}).end();
   } catch (error) {
     next(error)  ;
   }

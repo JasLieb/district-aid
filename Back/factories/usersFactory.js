@@ -8,7 +8,6 @@ var createNewUser = async (userData) => {
         user.password = await bcrypt.hash(user.password, 10);
         user.token = getNewToken(user.id);
         return await user.save();
-        saveUser(user);
     } catch (e) {
         throw e;
     }
@@ -17,18 +16,18 @@ var createNewUser = async (userData) => {
 var login = async (user) => {
     try {
         var userFound = await User.findOne({'email': user.email});
-        
-        if(user.password && !await bcrypt.compare(user.password, userFound.password)) {
-            throw new Error('401 : NotConnected');
+        var match = !(await bcrypt.compare(user.password, userFound.password));
+
+        if(user.password && match) {
+            throw new Error('401 : NotConnected - Wrong email and password');
         }
-        userFound.token = getNewToken(userFound.id);
-        return userFound;
+
+        return getNewToken(userFound.id);
     } catch (error) {
         throw error;
     }
 }
 
-/// TODO Tokens expiration date verification
 var getNewToken = (id) => jwt.sign({ _id: id.toString() }, process.env.JWTSECRETKEY, { expiresIn: "7 days" });
 
 
