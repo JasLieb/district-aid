@@ -3,8 +3,6 @@ env:
 name: Test, Build and Release apk
 on:
   push:
-    branches: 
-      - master
     tags:
       - '!refs/tags/*'
   pull_request:
