@@ -25,9 +25,8 @@ var saveUser = async (user) => {
 var login = async (user) => {
     try {
         var userFound = await User.findOne({'email': user.email});
-        var match = await bcrypt.compare(user.password, userFound.password);
         
-        if(!match) {
+        if(user.password && !await bcrypt.compare(user.password, userFound.password)) {
             throw new Error('401 : NotConnected');
         }
         
