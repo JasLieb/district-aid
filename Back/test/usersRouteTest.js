@@ -12,6 +12,41 @@ const totoPassword = "totoestlemotdepasse";
 
 
 describe('/user tests', () => {
+    describe('#POST /register no errors', () => {
+        var response;
+        before((done) => {
+            agent.post('/users/register')
+                .send({
+                    "name": dummyName,
+                    "password": dummyPassword,
+                    "email": dummyEmail
+                })
+                .end((err, res) => {
+                    if(err) { done(err);}
+                    else {
+                        response = res;
+                        done();
+                    }
+                });
+        });
+
+        it('Expect response have status 200', (done) => {
+            assert.ok(response.status == 200);
+            done();
+        });
+
+        it('Expect response have tokens', (done) => {
+            assert.ok(response.body.token);
+            done();
+        });
+
+        after((done) => {
+            User.deleteOne({name: dummyName, email: dummyEmail}, (err) => {
+                done(err);
+            });
+        })
+    });
+    
     describe('#POST /login without token', () => {
         var response;
         before((done) => {
@@ -67,40 +102,5 @@ describe('/user tests', () => {
             assert.ok(response.body.token);
             done();
         });
-    });
-
-    describe('#POST /register no errors', () => {
-        var response;
-        before((done) => {
-            agent.post('/users/register')
-                .send({
-                    "name": dummyName,
-                    "password": dummyPassword,
-                    "email": dummyEmail
-                })
-                .end((err, res) => {
-                    if(err) { done(err);}
-                    else {
-                        response = res;
-                        done();
-                    }
-                });
-        });
-
-        it('Expect response have status 200', (done) => {
-            assert.ok(response.status == 200);
-            done();
-        });
-
-        it('Expect response have tokens', (done) => {
-            assert.ok(response.body.token);
-            done();
-        });
-
-        after((done) => {
-            User.deleteOne({name: dummyName, email: dummyEmail}, (err) => {
-                done(err);
-            });
-        })
     });
 });
