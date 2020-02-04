@@ -33,6 +33,11 @@ var schema = {
         type:String,
         required: true
     },
+    isConnected:{
+        type: Boolean,
+        required: true,
+        default: false
+    },
     createdAt:{
         type: Date,
         default: Date.now

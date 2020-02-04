@@ -1,8 +1,9 @@
-var User = require('../models/userModel');
+const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const authentification = require('../middlewares/authentification');
 
-var createNewUser = async (userData) => {
+const createNewUser = async (userData) => {
     try {
         var user = new User(userData);
         user.password = await bcrypt.hash(user.password, 10);
@@ -14,9 +15,9 @@ var createNewUser = async (userData) => {
     }
 }
 
-var login = async (user) => {
+const  login = async (user) => {
     try {
-        var userFound = await User.findOne({'email': user.email});
+        var userFound =await authentification(req.header('Authorization')) ||  await User.findOne({'email': user.email});
         var match = !(await bcrypt.compare(user.password, userFound.password));
 
         if(user.password && match) {
@@ -29,7 +30,7 @@ var login = async (user) => {
     }
 }
 
-var getNewToken = (id) => 'Bearer ' + jwt.sign({ _id: id.toString() }, process.env.JWTSECRETKEY, { expiresIn: "7 days" });
+const getNewToken = (id) => 'Bearer ' + jwt.sign({ _id: id.toString() }, process.env.JWTSECRETKEY, { expiresIn: "7 days" });
 
 
 module.exports = {
