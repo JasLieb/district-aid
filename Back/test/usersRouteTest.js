@@ -36,10 +36,9 @@ const loginDummy = () => {
 }
 
 const loginDummyWithToken = (token) => {
-    console.log(token);
     return new Promise((resolve, error) => {
         agent.post('/users/login')
-        .set('Token', token)
+        .set('Authorization', token)
         .end((err, res) => {
             if(err) { done(err);}
             else {
@@ -115,8 +114,7 @@ describe('/user tests', () => {
         before(
             (done) => {
                 regiterDummy(dummy).then(_ =>{
-
-                    loginDummyWithToken(dummy)
+                    loginDummyWithToken(response.body.token)
                     .then(done)
                     .catch();
                 })

@@ -7,7 +7,8 @@ var createNewUser = async (userData) => {
         var user = new User(userData);
         user.password = await bcrypt.hash(user.password, 10);
         user.token = getNewToken(user.id);
-        return await user.save();
+        await user.save();
+        return user.token;
     } catch (e) {
         throw e;
     }
@@ -28,7 +29,7 @@ var login = async (user) => {
     }
 }
 
-var getNewToken = (id) => jwt.sign({ _id: id.toString() }, process.env.JWTSECRETKEY, { expiresIn: "7 days" });
+var getNewToken = (id) => 'Bearer ' + jwt.sign({ _id: id.toString() }, process.env.JWTSECRETKEY, { expiresIn: "7 days" });
 
 
 module.exports = {
