@@ -4,8 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('./middlewares/logger');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var indexRouter = require('./routes/indexRoute');
+var usersRouter = require('./routes/usersRoute');
 var pointsRouter = require('./routes/interestPoints');
 
 var app = express();
