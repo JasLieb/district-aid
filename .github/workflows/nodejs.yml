@@ -2,22 +2,26 @@ name: Node.js CI
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  CI: true
 
 on:
   pull_request:
     branches-ignore:
       - master
+    env:
+      CD: false
   push:
     branches:
       - master
+    env:
+      CD: true
     
 jobs:
-  runs-on: ubuntu-latest
-  strategy:
-    matrix:
-      node-version: [8.x, 10.x, 12.x]:
-
   test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [8.x, 10.x, 12.x]
     steps:
       - uses: actions/checkout@v2
       - name: Generate build number
@@ -32,11 +36,15 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           
-      - name: Test Node.js Application 
-        env:
-          CI: true
-        run: 
-          - npm install
-          - npm run build --if-present
-          - npm test
+      - name: Install Node.js Application 
+        working-directory: ./Back
+        run: npm install
         
+      - name: Build Node.js Application 
+        working-directory: ./Back
+        run: npm run build --if-present
+        
+      - name: Test Node.js Application 
+        working-directory: ./Back
+        run: npm test
+
