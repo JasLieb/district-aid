@@ -7,7 +7,9 @@ env:
 on:
   pull_request:
     branches:
-      - '*'
+      - master
+      - 'Back/*'
+      - 'Front/*'  
   push:
     branches:
       - master
