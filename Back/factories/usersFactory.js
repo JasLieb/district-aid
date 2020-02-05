@@ -5,8 +5,8 @@ const authentification = require('../middlewares/authentification');
 const createNewUser = async (userData) => {
     try {
         var user = new User(userData);
-        user.password = await bcrypt.hash(user.password, 10);
-        user.token = getNewToken(user.id);
+        user.password = authentification.hashPassword();
+        user.token = authentification.getNewToken(user.id);
         await user.save();
         return user.token;
     } catch (e) {
@@ -14,8 +14,8 @@ const createNewUser = async (userData) => {
     }
 }
 
-const  login = async (user, authorization) => {
-    try {
+const login = async (user, authorization) => {
+try {
         return await authentification(user, authorization);
     } catch (error) {
         throw error;

@@ -4,18 +4,20 @@ const bcrypt = require('bcryptjs');
 
 const getNewToken = (id) => 'Bearer ' + jwt.sign({ _id: id.toString() }, process.env.JWTSECRETKEY, { expiresIn: "7 days" });
 
+const hashPassword = async (password) => await bcrypt.hash(password, 10);
+
 const classicLogin = async (user) => {
     var userFound = await User.findOne({'email': user.email});
     if(await bcrypt.compare(user.password, userFound.password))
-    return getNewToken(userFound.id);
+    return userFound.id;
 };
 
 const tokenLogin = async (authorization) => {
 
     const token = authorization.replace('Bearer', '').trim();
     const decoded = jwt.verify(token, process.env.JWTSECRETKEY);
-    console.log(decoded);
     const user = await User.findOne({ _id: decoded._id });
+
     if(user){
         return token;
     }
@@ -36,4 +38,8 @@ const authentification = async (user, authorization) => {
     }
 }
 
-module.exports = authentification;
+module.exports = {
+    authentification,
+    getNewToken,
+    hashPassword
+};
