@@ -69,12 +69,14 @@ describe('/user tests', () => {
             (done) => {
                 calls.regiterDummy(dummy)
                 .then(
-                    res => {
-                        calls.loginDummyWithToken(res.body.token)
-                        .then(res => {
-                            response = res;
-                            done();
-                        })
+                    registerRes => {
+                        calls.loginDummyWithToken(registerRes.body.token)
+                        .then(
+                            loginRes => {
+                                response = loginRes;
+                                done();
+                            }
+                        )
                         .catch(done);
                 })
                 .catch(done);
