@@ -70,6 +70,7 @@ describe('/user tests', () => {
                 calls.regiterDummy(dummy)
                 .then(
                     registerRes => {
+                        console.log(registerRes.body);
                         calls.loginDummyWithToken(registerRes.body.token)
                         .then(
                             loginRes => {
