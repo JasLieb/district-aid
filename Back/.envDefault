@@ -1,5 +1,4 @@
 NODE_ENV=development
-PORT=3000
 # Set your JTW token for test information here
 TOKEN_TEST=
 # Set your JTW secret key information here
