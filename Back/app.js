@@ -6,7 +6,7 @@ var logger = require('./middlewares/logger');
 
 var indexRouter = require('./routes/indexRoute');
 var usersRouter = require('./routes/usersRoute');
-var pointsRouter = require('./routes/interestPoints');
+var pointsRouter = require('./routes/interestPointsRoute');
 
 var app = express();
 
