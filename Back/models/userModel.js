@@ -30,8 +30,7 @@ var schema = {
         }
     },
     token:{
-        type:String,
-        required: true
+        type:String
     },
     isConnected:{
         type: Boolean,

@@ -1,5 +1,4 @@
 const User = require('../models/userModel');
-const bcrypt = require('bcryptjs');
 const authentification = require('../middlewares/authentification');
 
 const createNewUser = async (userData) => {
