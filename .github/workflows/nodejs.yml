@@ -2,6 +2,9 @@ name: Node.js CI
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  MONGO_KEY: ${{ secrets.MONGO_KEY }}
+  TOKEN_TEST: ${{ secrets.TOKEN_TEST }}
+  JWTSECRETKEY: ${{ secrets.JWTSECRETKEY }}
   CI: true
 
 on:
