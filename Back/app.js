@@ -37,8 +37,4 @@ app.use(function(err, req, res, next) {
   res.end();
 });
 
-// if(process.env.NODE_ENV != 'development'){
-//   app.listen(process.env.PORT);
-// }
-
 module.exports = app;
