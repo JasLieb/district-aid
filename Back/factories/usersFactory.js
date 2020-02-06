@@ -15,8 +15,9 @@ const createNewUser = async (userData) => {
     }
 }
 
-const login = async (user, authorization) => {
+const login = async (userData, authorization) => {
     try {
+        var user = new User(userData);
         return await authentification.login(user, authorization);
     } catch (error) {
         throw error;
