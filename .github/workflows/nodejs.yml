@@ -50,3 +50,7 @@ jobs:
       - name: Test Node.js Application 
         working-directory: ./Back
         run: npm test
+
+      - name: Show HTTP logs 
+        working-directory: ./Back
+        run: cat ./logs/http-log.logs
