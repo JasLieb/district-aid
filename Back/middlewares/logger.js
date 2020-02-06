@@ -5,11 +5,19 @@ const isFilledBody = (body) => body && Object.keys(body).length > 0;
 
 const checkBody = (body) => {
     if(isFilledBody(body)){
-        if(body.password) delete body.password;
-        return "body : " + JSON.stringify(body);
+        var checkedBody = body;
+        if(body.password) delete checkedBody.password;
+        return "body : " + JSON.stringify(checkedBody);
     }
     return "Nobody content";
 }
+
+const checkHeader = (headers) => {
+    const checkedHeaders = headers;
+    if(headers.authorization) delete checkedHeaders.authorization;
+
+    return JSON.stringify(checkedHeaders);
+};
 
 const logger = createLogger({
     format: format.combine(
@@ -34,11 +42,7 @@ const logger = createLogger({
     ]
 });
 
-morgan.token('reqContent', (req) => {
-    const body = req.body;
-    return [JSON.stringify(req.headers), checkBody(body)].join(' ');
-});
-
+morgan.token('reqContent', (req) => [checkHeader(req.headers), checkBody(req.body)].join(' '));
 
 const morganFormat = (tokens, req, res) => {
     return [

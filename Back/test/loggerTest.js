@@ -1,8 +1,17 @@
 const fileTools = require('./utils/fileTools');
 var assert = require('assert');
 var request = require('supertest');
+var User = require('../models/userModel');
 var app = require('../app');
 var agent = request.agent(app);
+
+var response;
+const dummyName = "Dummy Foo";
+const dummyEmail = "Dummy.Foo@asylum.io";
+const dummyPassword = "MyP4ZZVV0RDEZ";
+const dummy = {name: dummyName, password: dummyPassword, email: dummyEmail};
+const dummyWithToken = {token: process.env.TOKEN_TEST};
+const dummyWithoutPassword = {name: dummyName, email: dummyEmail};
 
 /// Test Helpers
 const getPoints = () => {
@@ -16,16 +25,50 @@ const getPoints = () => {
 }
 
 /// Test Helpers
-const regiterDummy = (dummy) => {
+const regiterDummy = (data) => {
     return new Promise((resolve, error) => {
         agent.post('/users/register')
-        .send(dummy)
+        .send(data)
         .end((err, res) => {
             if(err) error(err);
             else resolve();
         });
     });
 }
+
+const loginDummy = (data) => {
+    return new Promise((resolve, error) => {
+        agent.post('/users/login')
+        .send(data)
+        .end((err, res) => {
+            response = res;
+            if(err) error(err);
+            else resolve();
+        });
+    });
+}
+
+const loginDummyWithToken = (token) => {
+    return new Promise((resolve, error) => {
+        agent.post('/users/login')
+        .set('Authorization', token)
+        .end((err, res) => {
+            if(err) { done(err);}
+            else {
+                response = res;
+                resolve();
+            }
+        });
+    });
+}
+
+const deleteDummy = (data) =>
+    new Promise((resolve, error) => {
+        User.deleteOne({name: data.name, email: data.email}, (err) => {
+            if(err) error(err);
+            else resolve();
+        });
+    });
 
 /// TESTS
 describe('Logger tests', () => {
@@ -77,27 +120,17 @@ describe('Logger tests', () => {
 
     describe('Log #POST request with not well formed body', () => {
         describe('Log #POST register request without password', () => {
-            var response;
-            var error;
-            var dummy = {
-                email: 'dummy@nopass.word',
-                name: 'badDummy'
-            };
-
             before((done) => {
-                regiterDummy(dummy)
+                regiterDummy(dummyWithoutPassword)
                 .then(res => {
-                    response = res;
                     done();
                 })
                 .catch(err => {
-                    error = err;
                     done();
                 })
             });
 
             it('Logger expects to write last register error', (done) => {
-                console.log({response, error});
                 fileTools
                     .getLastLine('logs/all-logs.log', 64)
                     .then((lastLine) => {
@@ -105,11 +138,81 @@ describe('Logger tests', () => {
                         assert.ok(lastLine.includes('/users/register'));
                         assert.ok(lastLine.includes('user-agent'));
                         assert.ok(lastLine.includes('content-type'));
-                        assert.ok(lastLine.includes(JSON.stringify(dummy)));
                         done();
                     })
                     .catch(done);
             });
+
+            after(
+                (done) => {
+                    deleteDummy(dummy).then(done).catch(done);
+                }
+            );
+        });
+    });
+
+    describe('Log #POST login request ', () => {
+        describe('Log #POST login request with password', () => {
+            before(
+                (done) => {
+                    regiterDummy(dummy)
+                    .then(
+                        _ => {
+                            loginDummy(dummy).then(done).catch(done);
+                        }
+                    )
+                    .catch(done)
+                }
+            );
+
+            it('Logger expects to avoid write password', (done) => {
+                fileTools
+                    .getLastLine('logs/all-logs.log', 64)
+                    .then((lastLine) => {
+                        assert.ok(lastLine.includes('content-type'));
+                        assert.ok(lastLine.includes(JSON.stringify(dummyWithoutPassword)));
+                        assert.ok(!lastLine.includes(JSON.stringify(dummy)));
+                        done();
+                    })
+                    .catch(done);
+            });
+
+            after(
+                (done) => {
+                    deleteDummy(dummy).then(done).catch(done);
+                }
+            );
+        });
+
+        describe('Log #POST login request with token', () => {
+            before(
+                (done) => {
+                    regiterDummy(dummy)
+                    .then(
+                        _ => {
+                            loginDummyWithToken(dummyWithToken).then(done).catch(done);
+                        }
+                    )
+                    .catch(done)
+                }
+            );
+
+            it('Logger expects to avoid write token', (done) => {
+                fileTools
+                    .getLastLine('logs/all-logs.log', 64)
+                    .then((lastLine) => {
+                        assert.ok(!lastLine.includes('authorization'));
+                        assert.ok(!lastLine.includes(process.env.TOKEN_TEST));
+                        done();
+                    })
+                    .catch(done);
+            });
+
+            after(
+                (done) => {
+                    deleteDummy(dummy).then(done).catch(done);
+                }
+            );
         });
     });
 

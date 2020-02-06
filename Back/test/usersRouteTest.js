@@ -86,7 +86,7 @@ describe('/user tests', () => {
                 regiterDummy(dummy)
                 .then(
                     _ => {
-                        loginDummy(dummy).then(done).catch();
+                        loginDummy(dummy).then(done).catch(done);
                     }
                 )
                 .catch(done)
@@ -116,7 +116,7 @@ describe('/user tests', () => {
                 regiterDummy(dummy).then(_ =>{
                     loginDummyWithToken(response.body.token)
                     .then(done)
-                    .catch();
+                    .catch(done);
                 })
                 .catch(done);
         });
