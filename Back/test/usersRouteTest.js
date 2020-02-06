@@ -2,10 +2,6 @@ var assert = require('assert');
 const calls = require('./utils/apiCalls');
 
 var response;
-const dummyName = "Dummy Foo";
-const dummyEmail = "Dummy.Foo@asylum.io";
-const dummyPassword = "MyP4ZZVV0RDEZ";
-const dummy = {name: dummyName, password: dummyPassword, email: dummyEmail};
 
 describe('/user tests', () => {
     describe('#POST /register no errors', () => {

@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var options = {
-    dbName: 'NoWaste',
+    dbName: process.env.NODE_ENV === 'test' ? 'NoWasteTest' : 'NoWaste',
     useUnifiedTopology: true,
     useNewUrlParser: true,
     useCreateIndex: true

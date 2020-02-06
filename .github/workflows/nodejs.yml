@@ -5,6 +5,7 @@ env:
   MONGO_KEY: ${{ secrets.MONGO_KEY }}
   TOKEN_TEST: ${{ secrets.TOKEN_TEST }}
   JWTSECRETKEY: ${{ secrets.JWTSECRETKEY }}
+  NODE_ENV: 'test'
   CI: true
 
 on:
