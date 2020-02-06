@@ -9,6 +9,10 @@ const dummy = {name: dummyName, password: dummyPassword, email: dummyEmail};
 
 describe('/user tests', () => {
     describe('#POST /register no errors', () => {
+        const dummyName = "Dummy Bar";
+        const dummyEmail = "Dummy.Bar@asylum.io";
+        const dummyPassword = "MyP4ZZVV0RDEZ";
+        const dummy = {name: dummyName, password: dummyPassword, email: dummyEmail};
         before((done) => {
             calls.regiterDummy(dummy)
             .then(res => {
@@ -33,6 +37,10 @@ describe('/user tests', () => {
     });
 
     describe('#POST /login without token', () => {
+        const dummyName = "Dummy Sha";
+        const dummyEmail = "Dummy.Sha@asylum.io";
+        const dummyPassword = "MyP4ZZVV0RDEZ";
+        const dummy = {name: dummyName, password: dummyPassword, email: dummyEmail};
         before(
             (done) => {
                 calls.regiterDummy(dummy)
@@ -65,12 +73,15 @@ describe('/user tests', () => {
     });
 
     describe('#POST /login with token', () => {
+        const dummyName = "Dummy tok";
+        const dummyEmail = "Dummy.to@ed.nd";
+        const dummyPassword = "MyP4ZZVV0RDEZ";
+        const dummy = {name: dummyName, password: dummyPassword, email: dummyEmail};
         before(
             (done) => {
                 calls.regiterDummy(dummy)
                 .then(
                     registerRes => {
-                        console.log(registerRes.body);
                         calls.loginDummyWithToken(registerRes.body.token)
                         .then(
                             loginRes => {

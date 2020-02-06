@@ -2,13 +2,6 @@ const fileTools = require('./utils/fileTools');
 const calls = require('./utils/apiCalls');
 var assert = require('assert');
 
-const dummyName = "Dummy Foo";
-const dummyEmail = "Dummy.Foo@asylum.io";
-const dummyPassword = "MyP4ZZVV0RDEZ";
-const dummy = {name: dummyName, password: dummyPassword, email: dummyEmail};
-const dummyWithToken = {token: process.env.TOKEN_TEST};
-const dummyWithoutPassword = {name: dummyName, email: dummyEmail};
-
 describe('Logger tests', () => {
     describe('Log #GET request without body', () => {
         before((done) => {
@@ -60,8 +53,11 @@ describe('Logger tests', () => {
 
     describe('Log #POST request with not well formed body', () => {
         describe('Log #POST register request without password', () => {
+            const dummyName = "Dummy missPS";
+            const dummyEmail = "Dummy.miss@pass.word";
+            const dummy = {name: dummyName, email: dummyEmail};
             before((done) => {
-                calls.regiterDummy(dummyWithoutPassword)
+                calls.regiterDummy(dummy)
                 .then(_ => done()) // Ignore response parameter
                 .catch(_ => done()); // Avoid error handling and tests fails
             });
@@ -87,6 +83,11 @@ describe('Logger tests', () => {
 
     describe('Log #POST login request ', () => {
         describe('Log #POST login request with password', () => {
+            const dummyName = "Dummy pass";
+            const dummyEmail = "Dummy.with@pass.word";
+            const dummyPassword = "MyP4ZZVV0RDEZ";
+            const dummy = {name: dummyName, password: dummyPassword, email: dummyEmail};
+            const dummyWithoutPassword = {name: dummyName, email: dummyEmail};
             before(
                 (done) => {
                     calls.regiterDummy(dummy)
@@ -118,12 +119,16 @@ describe('Logger tests', () => {
         });
 
         describe('Log #POST login request with token', () => {
+            const dummyName = "Dummy Foo";
+            const dummyEmail = "Dummy.Foo@asylum.io";
+            const dummyPassword = "MyP4ZZVV0RDEZ";
+            const dummy = {name: dummyName, password: dummyPassword, email: dummyEmail};
             before(
                 (done) => {
                     calls.regiterDummy(dummy)
                     .then(
                         _ => 
-                            calls.loginDummyWithToken(dummyWithToken)
+                            calls.loginDummyWithToken(process.env.TOKEN_TEST)
                             .then(_ => done())
                             .catch(done)
                     )
