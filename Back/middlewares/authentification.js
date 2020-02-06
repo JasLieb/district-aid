@@ -4,7 +4,18 @@ const bcrypt = require('bcryptjs');
 
 const getNewToken = (id) => 'Bearer ' + jwt.sign({ _id: id.toString() }, process.env.JWTSECRETKEY, { expiresIn: "7 days" });
 
-const hashPassword = async (password) => await bcrypt.hash(password, 10);
+const hashPassword = async (password) => {
+    try {
+        return await new Promise((resolve, reject) => {
+            bcrypt.hash(password, 10, (err, hash) => {
+                if(err) reject(err);
+                else resolve(hash);
+            });
+        })
+    } catch (error) {
+        throw error
+    }
+};
 
 const classicLogin = async (user) => {
     try {

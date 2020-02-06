@@ -15,9 +15,21 @@ const getPoints = () => {
     });
 }
 
+/// Test Helpers
+const regiterDummy = (dummy) => {
+    return new Promise((resolve, error) => {
+        agent.post('/users/register')
+        .send(dummy)
+        .end((err, res) => {
+            if(err) error(err);
+            else resolve();
+        });
+    });
+}
+
 /// TESTS
 describe('Logger tests', () => {
-    describe('#GET request without body', () => {
+    describe('Log #GET request without body', () => {
         before((done) => {
             getPoints().then(done).catch(done);
         });
@@ -48,8 +60,57 @@ describe('Logger tests', () => {
                 .catch(done);
         });
 
-        after((done) => {
-            done();
+        it('Logger expects to write last http request in http-logs with some attributes', (done) => {
+            fileTools
+                .getLastLine('logs/http-logs.log', 64)
+                .then((lastLine) => {
+                    assert.ok(lastLine.includes('GET'));
+                    assert.ok(lastLine.includes('/points/'));
+                    assert.ok(lastLine.includes('user-agent'));
+                    assert.ok(!lastLine.includes('content-type'));
+                    assert.ok(lastLine.includes('Nobody content'));
+                    done();
+                })
+                .catch(done);
         });
     });
+
+    describe('Log #POST request with not well formed body', () => {
+        describe('Log #POST register request without password', () => {
+            var response;
+            var error;
+            var dummy = {
+                email: 'dummy@nopass.word',
+                name: 'badDummy'
+            };
+
+            before((done) => {
+                regiterDummy(dummy)
+                .then(res => {
+                    response = res;
+                    done();
+                })
+                .catch(err => {
+                    error = err;
+                    done();
+                })
+            });
+
+            it('Logger expects to write last register error', (done) => {
+                console.log({response, error});
+                fileTools
+                    .getLastLine('logs/all-logs.log', 64)
+                    .then((lastLine) => {
+                        assert.ok(lastLine.includes('POST'));
+                        assert.ok(lastLine.includes('/users/register'));
+                        assert.ok(lastLine.includes('user-agent'));
+                        assert.ok(lastLine.includes('content-type'));
+                        assert.ok(lastLine.includes(JSON.stringify(dummy)));
+                        done();
+                    })
+                    .catch(done);
+            });
+        });
+    });
+
 });

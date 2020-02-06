@@ -25,10 +25,13 @@ app.use('/points', pointsRouter);
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
-  res.locals.error = process.env.NODE_ENV === 'development' ? err : {};
+  res.locals.error = {};
+  if(process.env.NODE_ENV === 'development') {
+    res.locals.error = err;
+    console.error(err);
+  }
 
   // render the error page
-  console.log(err);
   res.status(err.status || 500);
   res.send(err);
   res.end();
