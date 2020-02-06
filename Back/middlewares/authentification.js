@@ -7,9 +7,14 @@ const getNewToken = (id) => 'Bearer ' + jwt.sign({ _id: id.toString() }, process
 const hashPassword = async (password) => await bcrypt.hash(password, 10);
 
 const classicLogin = async (user) => {
-    var userFound = await User.findOne({'email': user.email});
-    if(await bcrypt.compare(user.password, userFound.password))
-    return userFound.id;
+    try {
+        var userFound = await User.findOne({'email': user.email});
+        if(await bcrypt.compare(user.password, userFound.password))
+        return userFound.id;
+    } catch (error) {
+        /// TODO throw errors with status attribute !!!
+        throw Error('500 : Register failed');
+    }
 };
 
 const tokenLogin = async (authorization) => {
@@ -23,7 +28,7 @@ const tokenLogin = async (authorization) => {
     }
 }
 
-const authentification = async (user, authorization) => {
+const login = async (user, authorization) => {
     try {
         var token;
         if(authorization) {
@@ -34,12 +39,13 @@ const authentification = async (user, authorization) => {
         if(token) return token;
         else throw Error();
     } catch (error) {
+        /// TODO throw errors with status attribute !!!
         throw new Error('401 : NotConnected - Wrong email and password');
     }
 }
 
 module.exports = {
-    authentification,
+    login,
     getNewToken,
     hashPassword
 };
