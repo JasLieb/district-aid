@@ -7,9 +7,9 @@ router.post('/register', async function (req, res, next) {
     var token = await usersFactory.createNewUser(req.body);
     res.status(200).send({token}).end();
   } catch (error) {
-    res.redirect('/users/login');
-    // if(error.message.includes('401')) 
-    // else next(error);
+    if(error.message.includes('401'))
+      res.redirect('/users/login');
+    else next(error);
   }
 });
 
