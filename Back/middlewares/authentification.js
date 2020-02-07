@@ -30,14 +30,22 @@ const classicLogin = async (user) => {
     }
 };
 
-const tokenLogin = async (authorization) => {
-
-    const token = authorization.replace('Bearer', '').trim();
-    const decoded = jwt.verify(token, process.env.JWTSECRETKEY);
-    var query = `SELECT * FROM users where id=${decoded._id}`;
-
-    if(await db.queryOne(query)){
-        return token;
+const tokenLogin = async (user) => {
+    try {
+        const token = user.token.replace('Bearer', '').trim();
+        const decoded = jwt.verify(token, process.env.JWTSECRETKEY);
+        var query = `SELECT * FROM users where id=${decoded._id}`;
+    
+        if(await db.queryOne(query)){
+            return token;
+        }
+    } catch (error) {
+        if (error.name.includes('TokenExpiredError')) {
+            console.log(user);
+            return classicLogin(user);
+        } else {
+            throw error;
+        }
     }
 }
 
@@ -45,7 +53,7 @@ const login = async (user) => {
     try {
         var token;
         if(user.token) {
-            token = await tokenLogin(user.token);
+            token = await tokenLogin(user);
         } else if (user){
             token = await classicLogin(user);
         }

@@ -1,5 +1,5 @@
 var request = require('supertest');
-var User = require('../../models/userModel');
+var db = require('../../factories/databaseMariaFactory');
 var app = require('../../app');
 var agent = request.agent(app);
 
@@ -48,10 +48,9 @@ const loginDummyWithToken = (token) => {
 
 const deleteDummy = (data) =>
     new Promise((resolve, error) => {
-        User.deleteOne({name: data.name, email: data.email}, (err) => {
-            if(err) error(err);
-            else resolve();
-        });
+        db.query(`delete from users where name='${data.name}' and email='${data.email}'`) 
+        .then(res => { resolve(); })
+        .catch(err => { error(err); });
     });
 
 module.exports = {

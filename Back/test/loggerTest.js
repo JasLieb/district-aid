@@ -128,7 +128,7 @@ describe('Logger tests', () => {
                     calls.regiterDummy(dummy)
                     .then(
                         _ => 
-                            calls.loginDummyWithToken(process.env.TOKEN_TEST)
+                            calls.loginDummyWithToken(process.env.TOKEN_OLD_TEST)
                             .then(_ => done())
                             .catch(done)
                     )
@@ -141,7 +141,7 @@ describe('Logger tests', () => {
                     .getLastLine('logs/all-logs.log', 64)
                     .then((lastLine) => {
                         assert.ok(!lastLine.includes('authorization'));
-                        assert.ok(!lastLine.includes(process.env.TOKEN_TEST));
+                        assert.ok(!lastLine.includes(process.env.TOKEN_OLD_TEST));
                         done();
                     })
                     .catch(done);
