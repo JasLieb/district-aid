@@ -1,24 +1,21 @@
-var InterestPoint = require('../models/interestPointModel');
+const db = require('./databaseMariaFactory');
+const InterestPoint = require('../models/interestPointsModel');
+// InterestPoint.newPoint(localisation.name, {lng: 1, lat:1}, "Giver");
 
-var getInterestPoints = async () => {
+const getInterestPoints = async () => {
     try {
-        return await InterestPoint.find({}).exec();
+        const query = 'SELECT * FROM interest_points';
+        return await db.query(query);
     } catch (err) {
         console.log(err);
         throw err;
     }
 }
 
-var getInterestPointsFollowPosition = async (geoPoint, maxDistance) => {
+const getInterestPointsFollowPosition = async (localisation, maxDistance) => {
     try {
-        return await InterestPoint.findOne({
-            "geometry": {
-                $near: {
-                    $geometry: geoPoint.geometry,
-                    $maxDistance: maxDistance
-                },
-            }
-        }).exec();
+        const query = `SELECT * FROM interest_points WHERE ST_DISTANCE(POINT(${localisation.lng}, ${localisation.lat}), location) < ${maxDistance}`;
+        return await db.query(query);
     } catch (err) {
         throw err;
     }
