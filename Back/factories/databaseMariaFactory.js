@@ -23,6 +23,9 @@ const query = async (queryString) => {
     return res;
 }
 
+const queryOne = async (queryString) => (await query(queryString))[0];
+
 module.exports = {
-    query: query
+    query,
+    queryOne
 }
