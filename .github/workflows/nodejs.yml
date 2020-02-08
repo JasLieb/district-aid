@@ -53,8 +53,8 @@ jobs:
           collation server: 'utf8_general_ci'
           mariadb version: '10.4.10'
 
-      - name: Shutdown Ubuntu MySQL (SUDO)
-        run: sudo service mysql start
+      # - name: Shutdown Ubuntu MySQL (SUDO)
+      #   run: sudo service mysql start
 
       - name: Setup MariaDB data
         working-directory: ./Back
