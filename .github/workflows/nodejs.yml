@@ -4,7 +4,7 @@ env:
   TOKEN_OLD_TEST: ${{ secrets.TOKEN_OLD_TEST }}
   JWTSECRETKEY: ${{ secrets.JWTSECRETKEY }}
   NODE_ENV: test
-  DB_HOST: ::1
+  DB_HOST: "::1"
   DB_USER: developer
   DB_PASSWORD: rootPowa
   DB_NAME: test
@@ -57,7 +57,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Shutdown Ubuntu MySQL (SUDO)
+      - name: Restat Ubuntu MySQL Service (SUDO)
         run: sudo service mysql restart
 
       - name: Setup MariaDB data
