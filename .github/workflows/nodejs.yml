@@ -54,7 +54,7 @@ jobs:
 
       - name: Setup MariaDB data
         working-directory: ./Back
-        run: mysql -h localhost -P 3800 -u root test < ./models/database/nowasteDB.sql
+        run: mysql -h localhost -P 3307 -u root test < ./models/database/nowasteDB.sql
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
