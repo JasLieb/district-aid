@@ -29,9 +29,9 @@ jobs:
 
     services:
       mariadb:
-        image: mariadb:latest
+        image: '10.4.10'
         ports:
-          - 3306
+          - 3309
         env:
           MYSQL_USER: developer
           MYSQL_PASSWORD: rootPowa
@@ -72,9 +72,17 @@ jobs:
       # - name: Shutdown Ubuntu MySQL (SUDO)
       #   run: sudo service mysql start
 
+      - name: Verify MariaDB connection
+        env:
+          PORT: ${{ job.services.mariadb.ports[3306] }}
+        run: |
+          while ! mysqladmin ping -h"127.0.0.1" -P"$PORT" --silent; do
+            sleep 1
+          done
+
       - name: Setup MariaDB data
         working-directory: ./Back
-        run: mysql --host 127.0.0.1 --port 3306 -u developer -prootPowa < './models/database/exportDB.sql'
+        run: mysql --host 127.0.0.1 --port 3309 -u developer -prootPowa < './models/database/exportDB.sql'
 
       - name: Install Node.js Application 
         working-directory: ./Back
