@@ -27,7 +27,20 @@ jobs:
       matrix:
         node-version: [10.17.0]
 
+    services:
+      mariadb:
+        image: mariadb:latest
+        ports:
+          - 3306
+        env:
+          MYSQL_USER: developer
+          MYSQL_PASSWORD: rootPowa
+          MYSQL_DATABASE: test
+          MYSQL_ROOT_PASSWORD: password
+        options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=2s --health-retries=3
+
     steps:
+
       - uses: actions/checkout@v2
 
       # - name: Generate build number
@@ -44,16 +57,16 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Use MariaDB
-        uses: getong/mariadb-action@v1.1
-        with:
-          host port: 3800
-          container port: 3307 
-          character set server: 'utf8'
-          collation server: 'utf8_general_ci'
-          mariadb version: '10.4.10'
-          mysql user: 'developer' # Required if "mysql root password" is empty, default is empty. The superuser for the specified database. Can use secrets, too
-          mysql password: 'rootPowa' # Required 
+      # - name: Use MariaDB
+      #   uses: getong/mariadb-action@v1.1
+      #   with:
+      #     host port: 3800
+      #     container port: 3307 
+      #     character set server: 'utf8'
+      #     collation server: 'utf8_general_ci'
+      #     mariadb version: '10.4.10'
+      #     mysql user: 'developer' # Required if "mysql root password" is empty, default is empty. The superuser for the specified database. Can use secrets, too
+      #     mysql password: 'rootPowa' # Required 
 
 
       # - name: Shutdown Ubuntu MySQL (SUDO)
