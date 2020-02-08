@@ -47,9 +47,9 @@ jobs:
           mysql user: ${{ DB_NAME }}
           mysql password: ${{ DB_PASSWORD }}
 
-      - name: Setup MariaDB data
-        working-directory: ./Back
-        run: mysql -u root -p${{ DB_PASSWORD }} test < models/database/nowasteDB.sql
+      # - name: Setup MariaDB data
+      #   working-directory: ./Back
+      #   run: mysql -u root -p${{ DB_PASSWORD }} test < models/database/nowasteDB.sql
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
