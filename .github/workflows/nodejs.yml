@@ -30,8 +30,6 @@ jobs:
     services:
       mariadb:
         image: mariadb:latest
-        ports:
-          - 3309
         env:
           MYSQL_USER: developer
           MYSQL_PASSWORD: rootPowa
@@ -86,7 +84,7 @@ jobs:
       
       - name: Setup MariaDB data
         working-directory: ./Back
-        run: mysql -P"3309" -u developer -prootPowa < './models/database/exportDB.sql'
+        run: mysql -P"3306" -u developer -prootPowa < './models/database/exportDB.sql'
 
       - name: Install Node.js Application 
         working-directory: ./Back
