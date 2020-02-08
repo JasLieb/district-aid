@@ -1,12 +1,11 @@
 name: Node.js CI
 
 env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   TOKEN_OLD_TEST: ${{ secrets.TOKEN_OLD_TEST }}
   JWTSECRETKEY: ${{ secrets.JWTSECRETKEY }}
   NODE_ENV: test
   DB_HOST: localhost
-  DB_USER: root
+  DB_USER: rootTester
   DB_PASSWORD: rootInThePlace
   DB_NAME: test
   CI: true
@@ -44,8 +43,9 @@ jobs:
           character set server: 'utf8'
           collation server: 'utf8_general_ci'
           mariadb version: '10.4.10'
-          mysql user: ${{ DB_NAME }}
-          mysql password: ${{ DB_PASSWORD }}
+          mysql database: 'test'
+          mysql user: rootTester
+          mysql password: rootInThePlace
 
       - name: Setup MariaDB data
         working-directory: ./Back
