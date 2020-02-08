@@ -19,9 +19,11 @@ const hashPassword = async (password) => {
 
 const classicLogin = async (user) => {
     try {
+        console.log("classic log");
         var query =  `SELECT * FROM users WHERE email='${user.email}' `;
+        console.log(user);
         var userFound =  await db.queryOne(query);
-
+        console.log(userFound);
         if(await bcrypt.compare(user.password, userFound.password))
             return getNewToken(userFound);
         throw new Error('401 : NotConnected - Wrong email and password');
