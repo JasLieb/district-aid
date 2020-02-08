@@ -61,9 +61,6 @@ jobs:
       - name: Restat Ubuntu MySQL Service (SUDO)
         run: sudo service mysql restart
 
-      - name: Restat Ubuntu MySQL Service (SUDO)
-        run: netstat -tulpn
-
       - name: Setup MariaDB data
         working-directory: ./Back
         run: mysql -h"127.0.0.1" -P"3307" -u developer -prootPowa test < './models/database/exportDB.sql'
