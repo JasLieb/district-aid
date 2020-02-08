@@ -37,6 +37,9 @@ jobs:
       #     prefix: nowaste
       #     token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Shutdown Ubuntu MySQL (SUDO)
+        run: sudo service mysql stop
+
       - name: Use MariaDB
         uses: getong/mariadb-action@v1.1
         with:
