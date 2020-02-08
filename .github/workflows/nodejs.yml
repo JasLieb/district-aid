@@ -4,9 +4,9 @@ env:
   TOKEN_OLD_TEST: ${{ secrets.TOKEN_OLD_TEST }}
   JWTSECRETKEY: ${{ secrets.JWTSECRETKEY }}
   NODE_ENV: test
-  DB_HOST: localhost
-  DB_USER: rootTester
-  DB_PASSWORD: rootInThePlace
+  DB_HOST: ::1
+  DB_USER: developer
+  DB_PASSWORD: rootPowa
   DB_NAME: test
   CI: true
 
@@ -57,33 +57,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      # - name: Use MariaDB
-      #   uses: getong/mariadb-action@v1.1
-      #   with:
-      #     host port: 3800
-      #     container port: 3307 
-      #     character set server: 'utf8'
-      #     collation server: 'utf8_general_ci'
-      #     mariadb version: '10.4.10'
-      #     mysql user: 'developer' # Required if "mysql root password" is empty, default is empty. The superuser for the specified database. Can use secrets, too
-      #     mysql password: 'rootPowa' # Required 
+      # - name: Shutdown Ubuntu MySQL (SUDO)
+        # run: sudo service mysql restart
 
 
-      - name: Shutdown Ubuntu MySQL (SUDO)
-        run: sudo service mysql restart
-
-      # - name: Verify MariaDB connection
-      #   env:
-      #     PORT: ${{ job.services.mariadb.ports[3309] }}
-      #   run: |
-      #     while ! mysqladmin ping -h"127.0.0.1" -P"$PORT" --silent; do
-      #       sleep 1
-      #     done
-
-      - name: Setup MariaDB data
-        working-directory: ./Back
-        run: netstat -tulpn
-      
       - name: Setup MariaDB data
         working-directory: ./Back
         run: mysql -h"::1" -P"3307" -u root -ppassword test < './models/database/exportDB.sql'
