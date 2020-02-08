@@ -2,10 +2,13 @@ name: Node.js CI
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  MONGO_KEY: ${{ secrets.MONGO_KEY }}
-  TOKEN_TEST: ${{ secrets.TOKEN_TEST }}
+  TOKEN_OLD_TEST: ${{ secrets.TOKEN_TEST }}
   JWTSECRETKEY: ${{ secrets.JWTSECRETKEY }}
   NODE_ENV: 'test'
+  DB_HOST: localhost
+  DB_USER: root
+  DB_PASSWORD: rootInThePlace
+  DB_NAME: test
   CI: true
 
 on:
@@ -34,6 +37,19 @@ jobs:
       #   with:
       #     prefix: nowaste
       #     token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Use MariaDB
+        uses: getong/mariadb-action@v1.1
+        with:
+          character set server: 'utf8'
+          collation server: 'utf8_general_ci'
+          mariadb version: '10.4.10'
+          mysql user: ${{ DB_NAME }}
+          mysql password: ${{ DB_PASSWORD }}
+
+      - name: Setup MariaDB data
+        working-directory: ./Back
+        run: mysql -u root -p${{ DB_PASSWORD }} test < models/database/nowasteDB.sql
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
