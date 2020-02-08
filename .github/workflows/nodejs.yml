@@ -15,8 +15,8 @@ on:
   pull_request:
     branches:
       - master
-      - Back/*
-      - Front/*
+      - Back
+      - Front
   push:
     branches:
       - master
