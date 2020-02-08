@@ -5,11 +5,11 @@ const authentification = require('../middlewares/authentification');
 const createNewUser = async (userData) => {
     try {
         var user = UserModel.newUser(userData);
-        console.log("create");
-        console.log(user);
         user.password = await authentification.hashPassword(user.password);
         var query = `INSERT INTO USERS (name, email, password, creation_date) values ('${user.name}', '${user.email}', '${user.password}', CURRENT_TIMESTAMP())`;
         await db.query(query);
+        console.log("create");
+        console.log(user);
         
         // TODO DB function to return id generated
         query = `select id from users where email='${user.email}'`;
@@ -18,6 +18,7 @@ const createNewUser = async (userData) => {
 
         return authentification.getNewToken(res);
     } catch (e) {
+        console.log(e);
         throw new Error("500 : Fails to create new user");
     }
 }
