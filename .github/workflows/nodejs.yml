@@ -86,7 +86,7 @@ jobs:
       
       - name: Setup MariaDB data
         working-directory: ./Back
-        run: mysql -h"::1" -P"3306" -u root -ppassword test < './models/database/exportDB.sql'
+        run: mysql -h"::1" -P"3307" -u root -ppassword test < './models/database/exportDB.sql'
 
       - name: Install Node.js Application 
         working-directory: ./Back
