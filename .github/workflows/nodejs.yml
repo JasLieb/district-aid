@@ -52,13 +52,16 @@ jobs:
           character set server: 'utf8'
           collation server: 'utf8_general_ci'
           mariadb version: '10.4.10'
+          mysql user: 'developer' # Required if "mysql root password" is empty, default is empty. The superuser for the specified database. Can use secrets, too
+          mysql password: 'rootPowa' # Required 
+
 
       # - name: Shutdown Ubuntu MySQL (SUDO)
       #   run: sudo service mysql start
 
       - name: Setup MariaDB data
         working-directory: ./Back
-        run: mysql -h localhost -P 3307 -u root < './models/database/exportDB.sql'
+        run: mysql --host 127.0.0.1 ---port 3307 -u developer -prootPowa < './models/database/exportDB.sql'
 
       - name: Install Node.js Application 
         working-directory: ./Back
