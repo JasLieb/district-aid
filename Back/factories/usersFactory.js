@@ -5,11 +5,13 @@ const authentification = require('../middlewares/authentification');
 const createNewUser = async (userData) => {
     try {
         var user = UserModel.newUser(userData);
-        user.password = await authentification.hashPassword(user.password);
-        var query = `INSERT INTO USERS (name, email, password, creation_date) values ('${user.name}', '${user.email}', '${user.password}', CURRENT_TIMESTAMP())`;
-        await db.query(query);
         console.log("create");
         console.log(user);
+        user.password = await authentification.hashPassword(user.password);
+        console.log("----------");
+        console.log(user);
+        var query = `INSERT INTO USERS (name, email, password, creation_date) values ('${user.name}', '${user.email}', '${user.password}', CURRENT_TIMESTAMP())`;
+        await db.query(query);
         
         // TODO DB function to return id generated
         query = `select id from users where email='${user.email}'`;

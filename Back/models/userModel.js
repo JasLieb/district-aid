@@ -2,6 +2,7 @@ const validator = require('validator');
 // TODO use validator 
 
 const newUser = (data, autorization) => {
+    console.log({data});
     var user = {
         name: data.name,
         email: data.email,
