@@ -10,7 +10,7 @@ const createNewUser = async (userData) => {
         user.password = await authentification.hashPassword(user.password);
         console.log("----------");
         console.log(user);
-        var query = `INSERT INTO USERS (name, email, password, creation_date) values ('${user.name}', '${user.email}', '${user.password}', CURRENT_TIMESTAMP())`;
+        var query = `INSERT INTO users (name, email, password, creation_date) values ('${user.name}', '${user.email}', '${user.password}', CURRENT_TIMESTAMP())`;
         await db.query(query);
         
         // TODO DB function to return id generated
