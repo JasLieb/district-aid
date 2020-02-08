@@ -7,7 +7,6 @@ const getInterestPoints = async () => {
         const query = 'SELECT * FROM interest_points';
         return await db.query(query);
     } catch (err) {
-        console.log(err);
         throw err;
     }
 }

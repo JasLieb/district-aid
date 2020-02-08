@@ -5,9 +5,9 @@ env:
   JWTSECRETKEY: ${{ secrets.JWTSECRETKEY }}
   NODE_ENV: test
   DB_HOST: "::1"
-  DB_USER: developer
+  DB_USER: githubTester
   DB_PASSWORD: rootPowa
-  DB_NAME: test
+  DB_NAME: nowastetest
   DB_PORT: 3307
   CI: true
 
@@ -32,9 +32,9 @@ jobs:
       mariadb:
         image: mariadb:latest
         env:
-          MYSQL_USER: developer
-          MYSQL_PASSWORD: rootPowa
-          MYSQL_DATABASE: test
+          MYSQL_USER: ${{ DB_USER }}
+          MYSQL_PASSWORD: ${{ DB_PASSWORD }}
+          MYSQL_DATABASE: ${{ DB_NAME }}
           MYSQL_ROOT_PASSWORD: password
         ports:
           - 3307:3306
@@ -60,9 +60,6 @@ jobs:
 
       - name: Restat Ubuntu MySQL Service (SUDO)
         run: sudo service mysql restart
-
-      - name: Restat Ubuntu MySQL Service (SUDO)
-        run: netstat -tulpn
 
       - name: Setup MariaDB data
         working-directory: ./Back
