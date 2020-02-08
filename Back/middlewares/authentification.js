@@ -6,7 +6,7 @@ const getNewToken = (user) => 'Bearer ' + jwt.sign({ _id: user.id }, process.env
 
 const hashPassword = async (password) => {
     try {
-        return await new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             bcrypt.hash(password, 10, (err, hash) => {
                 if(err) reject(err);
                 else resolve(hash);
