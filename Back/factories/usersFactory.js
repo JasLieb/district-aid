@@ -23,7 +23,7 @@ const createNewUser = async (userData) => {
 const login = async (userData, authorization) => {
     try {
         var user = UserModel.newUser(userData, authorization);
-        return await authentification.login(user);
+        return await authentification.match(user);
     } catch (error) {
         throw error;
     }

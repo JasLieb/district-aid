@@ -23,18 +23,17 @@ app.use('/points', pointsRouter);
 // error handler
 // TODO Log system into files one for errors, for auth, login ...
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = {};
-  if(process.env.NODE_ENV === 'development') {
-    res.locals.error = err;
-    console.error(err);
-  }
+  if(process.env.NODE_ENV === 'development')
+    console.log(err);
 
-  // render the error page
-  res.status(err.status || 500);
-  res.send(err);
-  res.end();
+  if(err.message)
+    res.locals.message = err.message;
+  else
+    res.locals.error = err;
+
+  res.status(err.status || 500)
+    .send(err.message)
+    .end();
 });
 
 module.exports = app;

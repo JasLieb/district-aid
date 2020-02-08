@@ -21,6 +21,7 @@ const classicLogin = async (user) => {
     try {
         var query =  `SELECT * FROM users WHERE email='${user.email}' `;
         var userFound =  await db.queryOne(query);
+
         if(await bcrypt.compare(user.password, userFound.password))
             return getNewToken(userFound);
         throw new Error('401 : NotConnected - Wrong email and password');
@@ -31,17 +32,17 @@ const classicLogin = async (user) => {
 };
 
 const tokenLogin = async (user) => {
+    let userFound;
     try {
         const token = user.token.replace('Bearer', '').trim();
         const decoded = jwt.verify(token, process.env.JWTSECRETKEY);
         var query = `SELECT * FROM users where id=${decoded._id}`;
-    
-        if(await db.queryOne(query)){
+        userFound = await db.queryOne(query);
+        if(userFound){
             return token;
-        }
+        } else throw Error("401 : No token Matching");
     } catch (error) {
         if (error.name.includes('TokenExpiredError')) {
-            console.log(user);
             return classicLogin(user);
         } else {
             throw error;
@@ -49,7 +50,7 @@ const tokenLogin = async (user) => {
     }
 }
 
-const login = async (user) => {
+const match = async (user) => {
     try {
         var token;
         if(user.token) {
@@ -58,7 +59,7 @@ const login = async (user) => {
             token = await classicLogin(user);
         }
         if(token) return token;
-        else throw Error();
+        throw Error();
     } catch (error) {
         /// TODO throw errors with status attribute !!!
         throw error;
@@ -66,7 +67,7 @@ const login = async (user) => {
 }
 
 module.exports = {
-    login,
+    match,
     getNewToken,
     hashPassword
 };

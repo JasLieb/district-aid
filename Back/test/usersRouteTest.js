@@ -4,7 +4,7 @@ const calls = require('./utils/apiCalls');
 var response;
 
 describe('/user tests', () => {
-    describe('#POST /register no errors', () => {
+    describe('#POST /register', () => {
         const dummyName = "Dummy Bar";
         const dummyEmail = "Dummy.Bar@asylum.io";
         const dummyPassword = "MyP4ZZVV0RDEZ";
@@ -102,6 +102,71 @@ describe('/user tests', () => {
 
         after((done) => {
             calls.deleteDummy(dummy).then(done).catch(done);
+        });
+    });
+
+    describe('#POST /login with old token with data', () => {
+        const dummyName = "Dummy tok";
+        const dummyEmail = "Dummy.to@ed.nd";
+        const dummyPassword = "MyP4ZZVV0RDEZ";
+        const dummy = {name: dummyName, password: dummyPassword, email: dummyEmail};
+        before(
+            (done) => {
+                calls.regiterDummy(dummy)
+                .then(registerRes =>{
+                    setTimeout(() => {}, 10000);
+                    calls.loginDummyWithDataAndToken(process.env.TOKEN_OLD_TEST, dummy)
+                    .then(
+                        loginRes => {
+                            response = loginRes;
+                            done();
+                        }
+                    )
+                    .catch(done);
+                })
+                .catch(done);
+        });
+
+        it('#POST /login with old token and data expects response have status 200', (done) => {
+            assert.ok(response.status == 200);
+            done();
+        });
+
+        it('#POST /login with old token and data expects response still have token', (done) => {
+            assert.ok(response.body.token);
+            done();
+        });
+
+        after((done) => {
+            calls.deleteDummy(dummy).then(done).catch(done);
+        });
+    });
+
+    describe('#POST /login with old token without data', () => {
+        var error;
+        before(
+            (done) => {
+                calls.loginDummyWithToken(process.env.TOKEN_OLD_TEST)
+                .then(
+                    loginRes => {
+                        response = loginRes;
+                        done();
+                    }
+                )
+                .catch(err => {
+                    error = err;
+                    done();
+                });
+        });
+
+        it('#POST /login with old token without data expects response have status 500', (done) => {
+            assert.ok(response.status == 500);
+            done();
+        });
+
+        it('#POST /login with old token without data expects contains message about log in again', (done) => {
+            assert.ok(response.error.text.toLowerCase().includes('try again'));
+            done();
         });
     });
 });
