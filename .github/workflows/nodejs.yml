@@ -84,7 +84,7 @@ jobs:
       
       - name: Setup MariaDB data
         working-directory: ./Back
-        run: mysql -h"127.0.0.1" -P"3306" -u developer -prootPowa < './models/database/exportDB.sql'
+        run: mysql -h"127.0.0.1" -P"3306" -u root -ppassword < './models/database/exportDB.sql'
 
       - name: Install Node.js Application 
         working-directory: ./Back
