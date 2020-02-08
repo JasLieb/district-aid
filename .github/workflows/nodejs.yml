@@ -4,7 +4,7 @@ env:
   TOKEN_OLD_TEST: ${{ secrets.TOKEN_OLD_TEST }}
   JWTSECRETKEY: ${{ secrets.JWTSECRETKEY }}
   NODE_ENV: test
-  DB_HOST: "::1/128"
+  DB_HOST: "::1"
   DB_USER: developer
   DB_PASSWORD: rootPowa
   DB_NAME: test
@@ -59,6 +59,9 @@ jobs:
 
       - name: Restat Ubuntu MySQL Service (SUDO)
         run: sudo service mysql restart
+
+      - name: Restat Ubuntu MySQL Service (SUDO)
+        run: netstat -tulpn
 
       - name: Setup MariaDB data
         working-directory: ./Back
