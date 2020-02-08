@@ -2,7 +2,7 @@ name: Node.js CI
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  TOKEN_OLD_TEST: ${{ secrets.TOKEN_TEST }}
+  TOKEN_OLD_TEST: ${{ secrets.TOKEN_OLD_TEST }}
   JWTSECRETKEY: ${{ secrets.JWTSECRETKEY }}
   NODE_ENV: test
   DB_HOST: localhost
