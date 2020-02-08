@@ -4,12 +4,6 @@ env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   TOKEN_OLD_TEST: ${{ secrets.TOKEN_OLD_TEST }}
   JWTSECRETKEY: ${{ secrets.JWTSECRETKEY }}
-  NODE_ENV: test
-  DB_HOST: localhost
-  DB_USER: root
-  DB_PASSWORD: rootInThePlace
-  DB_NAME: test
-  CI: true
 
 on:
   pull_request:
