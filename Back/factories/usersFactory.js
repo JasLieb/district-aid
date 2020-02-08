@@ -10,12 +10,15 @@ const createNewUser = async (userData) => {
         await db.query(query);
         
         // TODO DB function to return id generated
-        query = `select id from users where email='${user.email}'`;
+        query = `select * from users where email='${user.email}'`;
         var res = await db.queryOne(query);
 
-        return authentification.getNewToken(res);
+        return authentification.getNewToken(res.id);
     } catch (e) {
-        throw new Error("500 : Fails to create new user");
+        console.log(e);
+        if(e.code == 'ER_DUP_ENTRY')
+            throw new Error(`500 : ${user.email} is already register`);
+        throw new Error('500 : Fails to create new user');
     }
 }
 

@@ -17,6 +17,7 @@ const query = async (queryString) => {
         res = await conn.query(queryString);
 
     } catch (err) {
+        console.log(err);
         throw err;
     } finally {
         if (conn) conn.release(); //release to pool

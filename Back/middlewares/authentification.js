@@ -2,7 +2,7 @@ const db = require('../factories/databaseMariaFactory');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
-const getNewToken = (user) => 'Bearer ' + jwt.sign({ _id: user.id }, process.env.JWTSECRETKEY, { expiresIn: "7 days" });
+const getNewToken = (id) => 'Bearer ' + jwt.sign({ _id: id }, process.env.JWTSECRETKEY, { expiresIn: "7 days" });
 
 const hashPassword = async (password) => {
     try {
@@ -21,9 +21,9 @@ const classicLogin = async (user) => {
     try {
         var query =  `SELECT * FROM users WHERE email='${user.email}' `;
         var userFound =  await db.queryOne(query);
-        if(await bcrypt.compare(user.password, userFound.password))
-            return getNewToken(userFound);
-        throw new Error('401 : NotConnected - Wrong email and password');
+        if(await bcrypt.compare(user.password, userFound.password)) {
+            return getNewToken(userFound.id);
+        }
     } catch (error) {
         /// TODO throw errors with status attribute !!!
         throw error;
@@ -37,14 +37,17 @@ const tokenLogin = async (user) => {
         const decoded = jwt.verify(token, process.env.JWTSECRETKEY);
         var query = `SELECT * FROM users where id=${decoded._id}`;
         userFound = await db.queryOne(query);
+
         if(userFound){
             return token;
-        } else throw Error("401 : No token Matching");
+        } else {
+            throw new Error('401 : No user found with token');
+        }
     } catch (error) {
-        if (error.name.includes('TokenExpiredError')) {
+        if (user.name && error.name.includes('TokenExpiredError')) {
             return classicLogin(user);
         } else {
-            throw error;
+            throw Error('401 : Plesae sign in again')
         }
     }
 }
@@ -58,7 +61,7 @@ const match = async (user) => {
             token = await classicLogin(user);
         }
         if(token) return token;
-        throw Error();
+        else throw Error();
     } catch (error) {
         /// TODO throw errors with status attribute !!!
         throw error;

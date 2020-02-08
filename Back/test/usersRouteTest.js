@@ -160,12 +160,12 @@ describe('/user tests', () => {
         });
 
         it('#POST /login with old token without data expects response have status 500', (done) => {
-            assert.ok(response.status == 500);
+            assert.equal(response.status, 500);
             done();
         });
 
         it('#POST /login with old token without data expects contains message about log in again', (done) => {
-            assert.ok(response.error.text.toLowerCase().includes('try again'));
+            assert.equal(response.error.text, '401 : Plesae sign in again');
             done();
         });
     });
