@@ -45,13 +45,13 @@ jobs:
           character set server: 'utf8'
           collation server: 'utf8_general_ci'
           mariadb version: '10.4.10'
-          mysql database: 'test'
+          # mysql database: 'test'
           mysql user: rootTester
           mysql password: rootInThePlace
 
       - name: Setup MariaDB data
         working-directory: ./Back
-        run: mysql -u root -prootInThePlace test < models/database/nowasteDB.sql
+        run: mysql -u rootTester -prootInThePlace test < models/database/nowasteDB.sql
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
