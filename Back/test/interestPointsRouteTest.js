@@ -15,7 +15,7 @@ describe('/points tests', () => {
         });
 
         it('expect have status 200', async () => {
-            assert.ok(response.status == 200);
+            assert.equal(response.status, 200);
         });
 
         it('should return some GeoPoint json without errors', async () => {
@@ -34,7 +34,7 @@ describe('/points tests', () => {
         });
 
         it('expect have status 200', async () => {
-            assert.ok(response.status == 200);
+            assert.equal(response.status, 200);
         });
 
         it('should return some GeoPoint json without errors', async () => {

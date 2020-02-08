@@ -18,7 +18,7 @@ describe('/user tests', () => {
         });
 
         it('POST /register expect response have status 200', (done) => {
-            assert.ok(response.status == 200);
+            assert.equal(response.status, 200);
             done();
         });
 
@@ -54,7 +54,7 @@ describe('/user tests', () => {
         );
 
         it('POST /login without token expect response have status 200', (done) => {
-            assert.ok(response.status == 200);
+            assert.equal(response.status, 200);
             done();
         });
 
@@ -91,7 +91,7 @@ describe('/user tests', () => {
         });
 
         it('#POST /login with token expect response have status 200', (done) => {
-            assert.ok(response.status == 200);
+            assert.equal(response.status, 200);
             done();
         });
 
@@ -128,7 +128,7 @@ describe('/user tests', () => {
         });
 
         it('#POST /login with old token and data expects response have status 200', (done) => {
-            assert.ok(response.status == 200);
+            assert.equal(response.status, 200);
             done();
         });
 
