@@ -46,12 +46,12 @@ jobs:
           collation server: 'utf8_general_ci'
           mariadb version: '10.4.10'
           # mysql database: 'test'
-          mysql user: rootTester
-          mysql password: rootInThePlace
+          # mysql user: rootTester
+          # mysql password: rootInThePlace
 
       - name: Setup MariaDB data
         working-directory: ./Back
-        run: mysql -h localhost -P 3800 -u rootTester -prootInThePlace test < models/database/nowasteDB.sql
+        run: mysql -h localhost -P 3800 -u root test < ./models/database/nowasteDB.sql
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
