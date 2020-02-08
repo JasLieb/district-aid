@@ -36,6 +36,13 @@ jobs:
       #   with:
       #     prefix: nowaste
       #     token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Shutdown Ubuntu MySQL (SUDO)
+        run: sudo service mysql stop
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
 
       - name: Use MariaDB
         uses: getong/mariadb-action@v1.1
@@ -45,18 +52,10 @@ jobs:
           character set server: 'utf8'
           collation server: 'utf8_general_ci'
           mariadb version: '10.4.10'
-          # mysql database: 'test'
-          # mysql user: rootTester
-          # mysql password: rootInThePlace
 
       - name: Setup MariaDB data
         working-directory: ./Back
         run: mysql -h 127.0.0.1 -P 3800 -u root < './models/database/exportDB.sql'
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
 
       - name: Install Node.js Application 
         working-directory: ./Back
