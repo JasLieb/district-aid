@@ -51,11 +51,11 @@ jobs:
 
       - name: Setup MariaDB data
         working-directory: ./Back
-        run: ls -al
+        run: ls -al ./models
 
       - name: Setup MariaDB data
         working-directory: ./Back
-        run: mysql -h 127.0.0.1 -P 3307 -u root < './Back/models/database/exportDB.sql'
+        run: mysql -h 127.0.0.1 -P 3307 -u root < './models/database/exportDB.sql'
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
