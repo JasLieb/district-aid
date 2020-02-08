@@ -72,13 +72,13 @@ jobs:
       # - name: Shutdown Ubuntu MySQL (SUDO)
       #   run: sudo service mysql start
 
-      - name: Verify MariaDB connection
-        env:
-          PORT: ${{ job.services.mariadb.ports[3309] }}
-        run: |
-          while ! mysqladmin ping -h"127.0.0.1" -P"$PORT" --silent; do
-            sleep 1
-          done
+      # - name: Verify MariaDB connection
+      #   env:
+      #     PORT: ${{ job.services.mariadb.ports[3309] }}
+      #   run: |
+      #     while ! mysqladmin ping -h"127.0.0.1" -P"$PORT" --silent; do
+      #       sleep 1
+      #     done
 
       - name: Setup MariaDB data
         working-directory: ./Back
