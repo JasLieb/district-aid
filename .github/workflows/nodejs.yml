@@ -8,6 +8,7 @@ env:
   DB_USER: developer
   DB_PASSWORD: rootPowa
   DB_NAME: test
+  DB_PORT: 3307
   CI: true
 
 on:
