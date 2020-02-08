@@ -37,6 +37,9 @@ jobs:
       #     prefix: nowaste
       #     token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Docker pull MariaDB image
+        run: docker pull mariadb
+
       - name: Use MariaDB
         uses: getong/mariadb-action@v1.1
         with:
