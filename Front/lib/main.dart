@@ -22,7 +22,7 @@ class Contacts extends StatefulWidget {
 }
 
 class _ContactsState extends State<Contacts> {
-  final _contacts = <Contact>[];
+  final _contacts = <Contact>[new Contact("toto"), new Contact("tata"), new Contact("titi")];
   final _favouriteContacts = Set<Contact>();
   final _fontSize = const TextStyle(fontSize: 18);
   
