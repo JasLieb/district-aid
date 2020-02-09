@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:nowaste/src/models/contact.dart';
 import 'package:nowaste/src/screens/favouritesContacts.dart';
@@ -28,6 +30,7 @@ class _ContactsState extends State<Contacts> {
   
   @override
   Widget build(BuildContext context) { 
+    _contacts = [new Contact('toto'), new Contact('tata')];
     return Scaffold(
         appBar: AppBar(
           title: Text('My contact App'),
@@ -45,10 +48,12 @@ class _ContactsState extends State<Contacts> {
   }
 
   Widget _buildContactList() {
+    log(_contacts.length.toString());
     return ListView.builder(
       padding: const EdgeInsets.all(16.0),
       itemCount: _contacts.length,
       itemBuilder: (context, i) {
+          log(_contacts[i].name);
           return _buildContactLine(_contacts[i]);
       });
   }
