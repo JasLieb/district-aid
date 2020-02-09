@@ -5,12 +5,10 @@ const bcrypt = require('bcryptjs');
 var createNewUser = async (userData) => {
     try {
         var user = new User(userData);
-        user.password = await bcrypt.hash(user.password, 10);
         user.token = getNewToken(user.id);
         await user.save();
         return user.token;
     } catch (e) {
-        throw e;
     }
 }
 
@@ -35,4 +33,4 @@ var getNewToken = (id) => 'Bearer ' + jwt.sign({ _id: id.toString() }, process.e
 module.exports = {
     createNewUser,
     login
-};
+}
