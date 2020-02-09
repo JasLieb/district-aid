@@ -17,8 +17,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/points', pointsRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/points', pointsRouter);
 
 // error handler
 // TODO Log system into files one for errors, for auth, login ...

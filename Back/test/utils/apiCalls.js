@@ -5,7 +5,7 @@ var db = require('../../factories/databaseMariaFactory');
 
 const getPoints = () => {
     return new Promise((resolve, error) => {
-        agent.get('/points/')
+        agent.get('/api/points/')
         .end((err, res) => {
             if(err) error(err);
             else resolve(res);
@@ -15,7 +15,7 @@ const getPoints = () => {
 
 const getPointsNear = (position) => {
     return new Promise((resolve, error) => {
-        agent.get('/points/nearMe')
+        agent.get('/api/points/nearMe')
         .send({position})
         .end((err, res) => {
             if(err) error(err);
@@ -26,7 +26,7 @@ const getPointsNear = (position) => {
 
 const regiterDummy = (data) => {
     return new Promise((resolve, error) => {
-        agent.post('/users/register')
+        agent.post('/api/users/register')
         .send(data)
         .end((err, res) => {
             if(err) error(err);
@@ -37,7 +37,7 @@ const regiterDummy = (data) => {
 
 const loginDummy = (data) => {
     return new Promise((resolve, error) => {
-        agent.post('/users/login')
+        agent.post('/api/users/login')
         .send(data)
         .end((err, res) => {
             if(err) error(err);
@@ -48,7 +48,7 @@ const loginDummy = (data) => {
 
 const loginDummyWithToken = (token) => {
     return new Promise((resolve, error) => {
-        agent.post('/users/login')
+        agent.post('/api/users/login')
         .set('Authorization', token)
         .end((err, res) => {
             if(err) error(err);
@@ -59,7 +59,7 @@ const loginDummyWithToken = (token) => {
 
 const loginDummyWithDataAndToken = (token, data) => {
     return new Promise((resolve, error) => {
-        agent.post('/users/login')
+        agent.post('/api/users/login')
         .set('Authorization', token)
         .send(data)
         .end((err, res) => {
