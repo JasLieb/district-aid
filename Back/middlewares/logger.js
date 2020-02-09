@@ -14,7 +14,7 @@ const checkBody = (body) => {
 
 const checkHeader = (headers) => {
     const checkedHeaders = headers;
-    if(headers.authorization) delete checkedHeaders.authorization;
+    delete checkedHeaders.authorization;
 
     return JSON.stringify(checkedHeaders);
 };
@@ -29,7 +29,7 @@ const logger = createLogger({
             filename: './logs/all-logs.log',
             json: false,
             maxsize: 5242880,
-            maxFiles: 5,
+            maxFiles: 5
         }),
         new transports.File({
             filename: './logs/http-logs.log',

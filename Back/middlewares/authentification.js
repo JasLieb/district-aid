@@ -2,7 +2,7 @@ const db = require('../factories/databaseMariaFactory');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
-const getNewToken = (id) => 'Bearer ' + jwt.sign({ _id: id }, process.env.JWTSECRETKEY, { expiresIn: "7 days" });
+const getNewToken = (id) => 'Bearer ' + jwt.sign({ _id: id }, process.env.JWTSECRETKEY, { expiresIn: "1 days" });
 
 const hashPassword = async (password) => {
     try {
@@ -44,7 +44,7 @@ const tokenLogin = async (user) => {
             throw new Error('401 : No user found with token');
         }
     } catch (error) {
-        if (user.name && error.name.includes('TokenExpiredError')) {
+        if (user.password && user.email) {
             return classicLogin(user);
         } else {
             throw Error('401 : Plesae sign in again')
