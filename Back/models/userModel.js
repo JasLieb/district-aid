@@ -5,7 +5,6 @@ var schema = {
     name:{
         type: String,
         required: true,
-        unique:true,
         trim: true
     },
     email:{
@@ -30,12 +29,10 @@ var schema = {
             }
         }
     },
-    tokens:[{
-        token:{
-            type:String,
-            required: true
-        }
-    }],
+    token:{
+        type:String,
+        required: true
+    },
     createdAt:{
         type: Date,
         default: Date.now
@@ -44,4 +41,4 @@ var schema = {
 
 var userModel = new db.Schema(schema);
 
-module.exports = db.mongoose.model('User', userModel, 'Users');
+module.exports = db.mongoose.model('User', userModel, 'User');

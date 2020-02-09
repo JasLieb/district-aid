@@ -5,51 +5,32 @@ const bcrypt = require('bcryptjs');
 var createNewUser = async (userData) => {
     try {
         var user = new User(userData);
-        return await newAuthToken(user);
+        user.password = await bcrypt.hash(user.password, 10);
+        user.token = getNewToken(user.id);
+        await user.save();
+        return user.token;
     } catch (e) {
         throw e;
     }
 }
 
-var newAuthToken = async (user) => {
-    const token = jwt.sign({ _id: user.id.toString() }, process.env.JWTSECRETKEY, { expiresIn: "7 days" });
-    try {
-        user.password = await bcrypt.hash(user.password, 10);
-        user.tokens = user.tokens.concat({ token })
-        await user.save();
-    } catch (error) {
-        throw error;
-    }
-    return token;
-}
-
 var login = async (user) => {
     try {
         var userFound = await User.findOne({'email': user.email});
-        var match = await bcrypt.compare(user.password, userFound.password);
+        var match = !(await bcrypt.compare(user.password, userFound.password));
 
-        if(!match) {
-            throw new Error('401 : NotConnected');
+        if(user.password && match) {
+            throw new Error('401 : NotConnected - Wrong email and password');
         }
 
-        userFound = await addNewToken(userFound);
-        return userFound.tokens.slice(-1)[0];
+        return getNewToken(userFound.id);
     } catch (error) {
         throw error;
     }
 }
 
-/// TODO Tokens expiration date verification
-var addNewToken = async (user) => {
-    const token = jwt.sign({ _id: user._id.toString() }, process.env.JWTSECRETKEY, { expiresIn: "7 days" });
-    user.tokens = user.tokens.concat({token});
-    try {
-        await user.save();
-        return user;
-    } catch (error) {
-        throw error;
-    }
-}
+var getNewToken = (id) => 'Bearer ' + jwt.sign({ _id: id.toString() }, process.env.JWTSECRETKEY, { expiresIn: "7 days" });
+
 
 module.exports = {
     createNewUser,
