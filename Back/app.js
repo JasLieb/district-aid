@@ -23,7 +23,7 @@ app.use('/points', pointsRouter);
 // error handler
 // TODO Log system into files one for errors, for auth, login ...
 app.use(function(err, req, res, next) {
-
+  console.log(err);
   if(err.message)
     res.locals.message = err.message;
   else
