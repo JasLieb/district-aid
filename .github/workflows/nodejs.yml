@@ -1,6 +1,7 @@
 name: Node.js CI
 
 env:
+  TOKEN_OLD_TEST: ${{ secrets.TOKEN_UNKNOWN_TEST }}
   TOKEN_OLD_TEST: ${{ secrets.TOKEN_OLD_TEST }}
   JWTSECRETKEY: ${{ secrets.JWTSECRETKEY }}
   NODE_ENV: test
