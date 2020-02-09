@@ -1,12 +1,12 @@
+const db = require('../factories/databaseMariaFactory');
 const jwt = require('jsonwebtoken');
-const User = require('../models/userModel');
 const bcrypt = require('bcryptjs');
 
-const getNewToken = (id) => 'Bearer ' + jwt.sign({ _id: id.toString() }, process.env.JWTSECRETKEY, { expiresIn: "7 days" });
+const getNewToken = (id) => 'Bearer ' + jwt.sign({ _id: id }, process.env.JWTSECRETKEY, { expiresIn: "7 days" });
 
 const hashPassword = async (password) => {
     try {
-        return await new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             bcrypt.hash(password, 10, (err, hash) => {
                 if(err) reject(err);
                 else resolve(hash);
@@ -19,31 +19,44 @@ const hashPassword = async (password) => {
 
 const classicLogin = async (user) => {
     try {
-        var userFound = await User.findOne({'email': user.email});
-        if(await bcrypt.compare(user.password, userFound.password))
-        return userFound.id;
+        var query =  `SELECT * FROM users WHERE email='${user.email}' `;
+        var userFound =  await db.queryOne(query);
+        if(await bcrypt.compare(user.password, userFound.password)) {
+            return getNewToken(userFound.id);
+        }
     } catch (error) {
         /// TODO throw errors with status attribute !!!
-        throw Error('500 : Register failed');
+        throw error;
     }
 };
 
-const tokenLogin = async (authorization) => {
+const tokenLogin = async (user) => {
+    let userFound;
+    try {
+        const token = user.token.replace('Bearer', '').trim();
+        const decoded = jwt.verify(token, process.env.JWTSECRETKEY);
+        var query = `SELECT * FROM users where id=${decoded._id}`;
+        userFound = await db.queryOne(query);
 
-    const token = authorization.replace('Bearer', '').trim();
-    const decoded = jwt.verify(token, process.env.JWTSECRETKEY);
-    const user = await User.findOne({ _id: decoded._id });
-
-    if(user){
-        return token;
+        if(userFound){
+            return token;
+        } else {
+            throw new Error('401 : No user found with token');
+        }
+    } catch (error) {
+        if (user.name && error.name.includes('TokenExpiredError')) {
+            return classicLogin(user);
+        } else {
+            throw Error('401 : Plesae sign in again')
+        }
     }
 }
 
-const login = async (user, authorization) => {
+const match = async (user) => {
     try {
         var token;
-        if(authorization) {
-            token = await tokenLogin(authorization);
+        if(user.token) {
+            token = await tokenLogin(user);
         } else if (user){
             token = await classicLogin(user);
         }
@@ -51,12 +64,12 @@ const login = async (user, authorization) => {
         else throw Error();
     } catch (error) {
         /// TODO throw errors with status attribute !!!
-        throw new Error('401 : NotConnected - Wrong email and password');
+        throw error;
     }
 }
 
 module.exports = {
-    login,
+    match,
     getNewToken,
     hashPassword
 };

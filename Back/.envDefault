@@ -1,7 +1,12 @@
 NODE_ENV=development
 # Set your JTW token for test information here
-TOKEN_TEST=
+TOKEN_OLD_TEST=
 # Set your JTW secret key information here
 JWTSECRETKEY=
 # Set your database connection information here
 MONGO_KEY=
+DB_HOST=
+DB_USER=
+DB_PASSWORD=
+DB_NAME=
+DB_PORT=
