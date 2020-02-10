@@ -38,12 +38,6 @@ jobs:
       working-directory: ./Front
       run: flutter build apk --target-platform android-arm,android-arm64,android-x64 --no-shrink
 
-
-  delivery:  
-    name: Delivery APKs on Github package
-    if: github.event_name == 'push'
-    runs-on: ubuntu-latest
-    steps:
     - name: Generate build number
       id: buildnumber
       uses: einaregilsson/build-number@v2 
