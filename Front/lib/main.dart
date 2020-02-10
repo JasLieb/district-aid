@@ -30,7 +30,6 @@ class _ContactsState extends State<Contacts> {
   
   @override
   Widget build(BuildContext context) { 
-    _contacts = [new Contact('toto'), new Contact('tata')];
     return Scaffold(
         appBar: AppBar(
           title: Text('My contact App'),
