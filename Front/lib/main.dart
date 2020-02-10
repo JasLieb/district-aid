@@ -47,12 +47,10 @@ class _ContactsState extends State<Contacts> {
   }
 
   Widget _buildContactList() {
-    log(_contacts.length.toString());
     return ListView.builder(
       padding: const EdgeInsets.all(16.0),
       itemCount: _contacts.length,
       itemBuilder: (context, i) {
-          log(_contacts[i].name);
           return _buildContactLine(_contacts[i]);
       });
   }
