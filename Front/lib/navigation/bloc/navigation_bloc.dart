@@ -22,27 +22,17 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
       try {
         yield AppNotInitialized();
         await Future.delayed(new Duration(seconds: 3)); // Call to repo here>
-        yield AppInitialized(contacts);
+        yield AppInitialized();
       } catch (e) {
         print(e);
       }
-    } else if (event is SwitchFaourite) {
-      final contact = event.contact;
-      contacts = contacts
-        .map(
-          (e) =>
-              e != contact
-                ? e
-                : new Contact(contact.name, !contact.isFavourite)
-        ).toList();
-      yield AppInitialized(contacts);
     } else if (event is ShowFavourites) {
-      final favourites = 
+      final favourites =
         contacts
         .where((e) => e.isFavourite)
         .toList();
       if (favourites.length > 0) {
-        yield AppInitialized(favourites);
+        yield AppInitialized();
       }
     }
     // } else if (event is ShowMap) {
