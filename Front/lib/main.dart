@@ -13,19 +13,19 @@ class SimpleBlocDelegate extends BlocDelegate {
   @override
   void onEvent(Bloc bloc, Object event) {
     super.onEvent(bloc, event);
-    print(event);
+    print('$bloc : $event');
   }
 
   @override
   void onTransition(Bloc bloc, Transition transition) {
     super.onTransition(bloc, transition);
-    print(transition);
+    print('$bloc : $transition');
   }
 
   @override
   void onError(Bloc bloc, Object error, StackTrace stacktrace) {
     super.onError(bloc, error, stacktrace);
-    print(error);
+    print('$bloc : $error');
   }
 }
 
@@ -38,6 +38,7 @@ void main() async {
     //   },
     //   child: App(),
     // ),
+    //App()
     MultiBlocProvider(
       providers: [
         BlocProvider<NavigationBloc>(
@@ -57,14 +58,20 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Welcome to Flutter',
-      home: BlocBuilder<NavigationBloc, NavigationState>(
-        builder: (context, state) {
-          if (state is AppInitialized) {
-            return Contacts();
-          }
+      home: BlocListener<NavigationBloc, NavigationState>(
+        bloc: context.bloc<NavigationBloc>(),
+        listener: (BuildContext context, NavigationState state) {
 
-          return SplashPage();
         },
+        child: BlocBuilder<NavigationBloc, NavigationState>(
+          builder: (context, state) {
+            if (state is AppInitialized) {
+              return Contacts();
+            }
+
+            return SplashPage();
+          },
+        ),
       )
     );
   }

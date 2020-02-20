@@ -16,5 +16,14 @@ class WithContacts extends ContactState {
   WithContacts(this.contacts);
 
   @override
+  List<Object> get props => [contacts,];
+}
+
+class UpdateContacts extends ContactState {
+  final List<Contact> contacts;
+
+  UpdateContacts(this.contacts);
+
+  @override
   List<Object> get props => [contacts];
 }

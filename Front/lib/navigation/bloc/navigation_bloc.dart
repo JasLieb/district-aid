@@ -41,4 +41,7 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
     //   yield Show();
     // }
   }
+
+  @override
+  String toString() => "Navigtion bloc";
 }
