@@ -1,29 +1,13 @@
-import 'package:equatable/equatable.dart';
 import 'package:nowaste/models/contact.dart';
 
-abstract class ContactState extends Equatable {
+abstract class ContactState {
   const ContactState();
 }
 
-class ContactInitial extends ContactState {
-  @override
-  List<Object> get props => [];
-}
+class ContactInitial extends ContactState {}
 
 class WithContacts extends ContactState {
   final List<Contact> contacts;
 
   WithContacts(this.contacts);
-
-  @override
-  List<Object> get props => [contacts,];
-}
-
-class UpdateContacts extends ContactState {
-  final List<Contact> contacts;
-
-  UpdateContacts(this.contacts);
-
-  @override
-  List<Object> get props => [contacts];
 }

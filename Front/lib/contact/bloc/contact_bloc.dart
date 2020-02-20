@@ -22,14 +22,14 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
       yield WithContacts(contacts);
     } else if (event is SwitchFavorite) {
       final contact = event.contact;
-      contacts = contacts
-          .map((e) =>
-            e != contact
-              ? e
-              : new Contact(contact.name, !contact.isFavourite)
-          )
-          .toList();
-      yield UpdateContacts(contacts);
+      contacts =
+        contacts
+        .map((e) => e != contact
+            ? e
+            : new Contact(contact.name, !contact.isFavourite)
+        )
+        .toList();
+      yield WithContacts(contacts);
     } else {
       yield ContactInitial();
     }
