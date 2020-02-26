@@ -60,7 +60,6 @@ jobs:
       with:
         tag_name: ${{ github.ref }}
         release_name: nowaste-0.${{ steps.buildnumber.outputs.build_number }}
-        draft: true
         prerelease: false
 
     - name: Upload release asset armeabi
