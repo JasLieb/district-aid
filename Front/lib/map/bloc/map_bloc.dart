@@ -14,9 +14,9 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   HttpBaseClient client = HttpBaseClient();
   List<LatLng> interestPoints = List<LatLng>();
   bool pointsAreVisible = false;
+
+  MapBloc() : super(_defaultMapState());
   
-  @override
-  MapState get initialState => _makeMapState();
   @override
   Stream<MapState> mapEventToState(
     MapEvent event,
@@ -32,6 +32,10 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     }
 
     yield _makeMapState();
+  }
+
+  static MapState _defaultMapState() {
+    return MapDisplayState(List<LatLng>(), false);
   }
 
   MapState _makeMapState() {

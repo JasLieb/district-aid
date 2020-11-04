@@ -11,7 +11,7 @@ class LandingPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('NoWaste - Downloads APK for android')),
       body: BlocBuilder<LandingPageBloc, LandingPageState>(
-        bloc: _landingPageBloc,
+        cubit: _landingPageBloc,
         builder: (context, state) {
           return Padding(
             padding: EdgeInsets.all(100),

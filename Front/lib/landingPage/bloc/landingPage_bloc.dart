@@ -6,8 +6,8 @@ part 'landingPage_event.dart';
 part 'landingPage_state.dart';
 
 class LandingPageBloc extends Bloc<LandingPageEvent, LandingPageState> {
-  @override
-  LandingPageState get initialState => LandingPageInitial();
+  
+  LandingPageBloc() : super(LandingPageInitial());
 
   @override
   Stream<LandingPageState> mapEventToState(

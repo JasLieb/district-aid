@@ -18,7 +18,7 @@ class Map extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('NoWaste - Accueil')),
       body: BlocBuilder<MapBloc, MapState>(
-        bloc: _mapBloc,
+        cubit: _mapBloc,
         builder: (context, state) {
           if(state is MapDisplayState) {
             markers.clear();

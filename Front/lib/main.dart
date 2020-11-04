@@ -1,8 +1,6 @@
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:nowaste/utils/delegates.dart';
 import 'package:nowaste/navigation/bloc/navigation.dart';
 import 'package:nowaste/splash/splash_page.dart';
 import 'package:nowaste/landingPage/landingPage.dart';
@@ -11,7 +9,6 @@ import 'package:nowaste/map/map.dart';
 
 void main() async {
   await DotEnv().load('.env');
-  BlocSupervisor.delegate = SimpleBlocDelegate();
   runApp(App());
 }
 

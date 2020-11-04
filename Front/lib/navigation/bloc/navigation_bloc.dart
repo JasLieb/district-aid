@@ -5,8 +5,7 @@ import 'package:nowaste/navigation/bloc/navigation.dart';
 
 class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
 
-  @override
-  NavigationState get initialState => AppNotInitializedState();
+  NavigationBloc() : super(AppNotInitializedState());
 
   @override
   Stream<NavigationState> mapEventToState(
