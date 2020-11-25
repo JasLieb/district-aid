@@ -11,9 +11,9 @@ const getInterestPoints = async () => {
     }
 }
 
-const getInterestPointsFollowPosition = async (localisation, maxDistance) => {
+const getInterestPointsFollowPosition = async (localization, maxDistance) => {
     try {
-        const query = `SELECT * FROM interest_points WHERE ST_DISTANCE(POINT(${localisation.lng}, ${localisation.lat}), location) < ${maxDistance}`;
+        const query = `SELECT * FROM interest_points WHERE ST_DISTANCE(POINT(${localization.lng}, ${localization.lat}), location) < ${maxDistance}`;
         return await db.query(query);
     } catch (err) {
         throw err;

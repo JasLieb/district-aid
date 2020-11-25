@@ -1,5 +1,5 @@
-name: nowaste
-description: nowaste project
+name: districtaid
+description: District Aid project
 version: 1.0.0+1
 
 environment:
@@ -14,7 +14,7 @@ dependencies:
   flutter_bloc: ^6.0.6
   flutter_dotenv: ^2.1.0
   flutter_map: ^0.10.1+1
-  url_launcher: ^5.7.2
+  url_launcher: 5.0.5
 
 dev_dependencies:
   flutter_test:

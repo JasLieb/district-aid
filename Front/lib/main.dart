@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:nowaste/navigation/bloc/navigation.dart';
-import 'package:nowaste/splash/splash_page.dart';
-import 'package:nowaste/landingPage/landingPage.dart';
-import 'package:nowaste/map/map.dart';
 
+import 'landingPage/landingPage.dart';
+import 'navigation/bloc/navigation.dart';
+import 'splash/splash_page.dart';
+import 'map/map.dart';
 
 void main() async {
   await DotEnv().load('.env');
@@ -16,21 +16,18 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => NavigationBloc()..add(AppStarted()),
-      child: MaterialApp(
-        title: 'Welcome to Flutter',
-        home: BlocBuilder<NavigationBloc, NavigationState>(
-          builder: (BuildContext context, NavigationState state) {
-            if (state is AppInitializedState) {
-              return Map();
-            } else if (state is WebAppInitializedState ) {
-              return LandingPage();
-            }
-            return SplashPage();
-          }
-        )
-      )
-    );
+        create: (context) => NavigationBloc()..add(AppStarted()),
+        child: MaterialApp(
+            title: 'Welcome to Flutter',
+            home: BlocBuilder<NavigationBloc, NavigationState>(
+                builder: (BuildContext context, NavigationState state) {
+              if (state is AppInitializedState) {
+                return Map();
+              } else if (state is WebAppInitializedState) {
+                return LandingPage();
+              }
+              return SplashPage();
+            })));
   }
 }
 

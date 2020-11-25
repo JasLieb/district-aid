@@ -1,11 +1,11 @@
 const db = require('./databaseMariaFactory');
 const UserModel = require('../models/userModel');
-const authentification = require('../middlewares/authentification');
+const authentication = require('../middlewares/authentication');
 
 const createNewUser = async (userData) => {
     try {
         var user = UserModel.newUser(userData);
-        user.password = await authentification.hashPassword(user.password);
+        user.password = await authentication.hashPassword(user.password);
         var query = `INSERT INTO users (name, email, password, creation_date) values ('${user.name}', '${user.email}', '${user.password}', CURRENT_TIMESTAMP())`;
         await db.query(query);
         
@@ -13,7 +13,7 @@ const createNewUser = async (userData) => {
         query = `select * from users where email='${user.email}'`;
         var res = await db.queryOne(query);
 
-        return authentification.getNewToken(res.id);
+        return authentication.getNewToken(res.id);
     } catch (e) {
         console.log(e);
         if(e.code == 'ER_DUP_ENTRY')
@@ -25,7 +25,7 @@ const createNewUser = async (userData) => {
 const login = async (userData, authorization) => {
     try {
         var user = UserModel.newUser(userData, authorization);
-        return await authentification.match(user);
+        return await authentication.match(user);
     } catch (error) {
         throw error;
     }

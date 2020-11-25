@@ -1,10 +1,11 @@
 # Copy this file into .env and fill entries
 NODE_ENV=development
 # Set your JTW tokens for local testing
-TOKEN_OLD_TEST=
-TOKEN_UNKOWN_TEST=
+TOKEN_OLD_TEST=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOjI1LCJpYXQiOjE2MDYyOTAyNTIsImV4cCI6MTYwNjM3NjY1Mn0.jkGxfHxPROeR_d7cc4a4O5H_qHku1FI23R7EptinpJ0
+TOKEN_UNKOWN_TEST=aaa
 # Set your JTW secret key information here
-JWTSECRETKEY=
+# Template contains default value for development purpose only
+JWTSECRETKEY=district-aid
 # Set your database connection information here
 DB_USER=
 DB_PASSWORD=

@@ -10,7 +10,7 @@ describe('/user tests', () => {
         const dummyPassword = "MyP4ZZVV0RDEZ";
         const dummy = {name: dummyName, password: dummyPassword, email: dummyEmail};
         before((done) => {
-            calls.regiterDummy(dummy)
+            calls.registerDummy(dummy)
             .then(res => {
                 response = res;
                 done();
@@ -39,7 +39,7 @@ describe('/user tests', () => {
         const dummy = {name: dummyName, password: dummyPassword, email: dummyEmail};
         before(
             (done) => {
-                calls.regiterDummy(dummy)
+                calls.registerDummy(dummy)
                 .then(
                     _ => {
                         calls.loginDummy(dummy)
@@ -75,7 +75,7 @@ describe('/user tests', () => {
         const dummy = {name: dummyName, password: dummyPassword, email: dummyEmail};
         before(
             (done) => {
-                calls.regiterDummy(dummy)
+                calls.registerDummy(dummy)
                 .then(
                     registerRes => {
                         calls.loginDummyWithToken(registerRes.body.token)
@@ -112,7 +112,7 @@ describe('/user tests', () => {
         const dummy = {name: dummyName, password: dummyPassword, email: dummyEmail};
         before(
             (done) => {
-                calls.regiterDummy(dummy)
+                calls.registerDummy(dummy)
                 .then(registerRes =>{
                     setTimeout(() => {}, 10000);
                     calls.loginDummyWithDataAndToken(process.env.TOKEN_OLD_TEST, dummy)
@@ -162,7 +162,7 @@ describe('/user tests', () => {
         });
 
         it('#POST /login with old token without data expects contains message about log in again', (done) => {
-            assert.equal(response.error.text, '401 : Plesae sign in again');
+            assert.equal(response.error.text, '401 : Please sign in again');
             done();
         });
     });
@@ -190,7 +190,7 @@ describe('/user tests', () => {
         });
 
         it('#POST /login with unknown token and data expects contains message about log in again', (done) => {
-            assert.equal(response.error.text, '401 : Plesae sign in again');
+            assert.equal(response.error.text, '401 : Please sign in again');
             done();
         });
     });
@@ -214,7 +214,7 @@ describe('/user tests', () => {
         });
 
         it('#POST /login with old token with data expects contains message about log in again', (done) => {
-            assert.equal(response.error.text, '401 : Plesae sign in again');
+            assert.equal(response.error.text, '401 : Please sign in again');
             done();
         });
     });
