@@ -63,7 +63,7 @@ jobs:
         run: sudo service mysql restart
 
       - name: Setup MariaDB data
-        working-directory: ./DB
+        working-directory: ./Db
         run: mysql -h"::1" -P"3307" -u developer -prootPowa test < './districtaid_export.sql'
 
       - name: Install Node.js Application 
