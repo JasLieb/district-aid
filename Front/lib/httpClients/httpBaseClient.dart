@@ -6,7 +6,7 @@ class HttpBaseClient {
   HttpBaseClient() {
     // or new Dio with a BaseOptions instance.
     BaseOptions options = new BaseOptions(
-      baseUrl: "https://www.district-aid.jaslieb.com/api/",
+      baseUrl: "https://www.nowaste.jaslieb.com/api/",
       connectTimeout: 5000,
       receiveTimeout: 3000,
     );

@@ -35,8 +35,7 @@ class Map extends StatelessWidget {
                 Row(children: [
                   ToggleButtons(
                     children: <Widget>[Icon(Icons.info_outline)],
-                    onPressed: (_) => _mapBloc
-                      ..add(MapShowPointsEvent(!state.pointsAreVisible)),
+                    onPressed: (_) => _mapBloc..add(MapShowPointsEvent(!state.pointsAreVisible)),
                     isSelected: [state.pointsAreVisible],
                   ),
                 ]),
@@ -51,8 +50,9 @@ class Map extends StatelessWidget {
                             LatLng(43.46089378008257, 1.3128662109375)),
                     layers: [
                       new TileLayerOptions(
-                        urlTemplate: "https://api.tiles.mapbox.com/v4/"
-                            "{id}/{z}/{x}/{y}@2x.png?access_token={accessToken}",
+                        urlTemplate: "https://api.mapbox.com/styles/v1/jaslieb"
+                            "/ck7hbpwbg0g4g1iqivxr3c6jk/tiles/256/{z}/{x}/{y}@2x"
+                            "?access_token={accessToken}",
                         additionalOptions: {
                           'accessToken': DotEnv().env['MAP_BOX_TOKEN'],
                           'id': 'mapbox.streets',
