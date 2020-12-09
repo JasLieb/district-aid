@@ -13,6 +13,35 @@ const getPoints = () => {
     });
 }
 
+const createPoint = (data) => {
+    return new Promise((resolve, error) => {
+        agent.post('/api/points/')
+        .send(data)
+        .end((err, res) => {
+            if(err) error(err);
+            else resolve(res);
+        });
+    });
+}
+
+const deletePoint = (data) => {
+    return new Promise((resolve, error) => {
+        agent.delete('/api/points/')
+        .send(data)
+        .end((err, res) => {
+            if(err) error(err);
+            else resolve(res);
+        });
+    });
+}
+
+const cleanDummyPoint = (data) =>
+    new Promise((resolve, error) => {
+        db.query(`delete from interest_points where name='${data.name}'`) 
+        .then(res => { resolve(); })
+        .catch(err => { error(err); });
+    })
+
 const getPointsNear = (position) => {
     return new Promise((resolve, error) => {
         agent.get('/api/points/nearMe')
@@ -78,6 +107,9 @@ const cleanDummyUser = (data) =>
 
 module.exports = {
     getPoints,
+    createPoint,
+    deletePoint,
+    cleanDummyPoint,
     getPointsNear,
     registerDummy,
     loginDummy,
