@@ -24,7 +24,7 @@ const getPointsNear = (position) => {
     });
 }
 
-const regiterDummy = (data) => {
+const registerDummy = (data) => {
     return new Promise((resolve, error) => {
         agent.post('/api/users/register')
         .send(data)
@@ -79,7 +79,7 @@ const deleteDummy = (data) =>
 module.exports = {
     getPoints,
     getPointsNear,
-    regiterDummy,
+    registerDummy,
     loginDummy,
     loginDummyWithToken,
     loginDummyWithDataAndToken,

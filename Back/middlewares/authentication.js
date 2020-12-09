@@ -47,7 +47,7 @@ const tokenLogin = async (user) => {
         if (user.password && user.email) {
             return classicLogin(user);
         } else {
-            throw Error('401 : Plesae sign in again')
+            throw Error('401 : Please sign in again')
         }
     }
 }

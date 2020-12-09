@@ -57,7 +57,7 @@ describe('Logger tests', () => {
             const dummyEmail = "Dummy.miss@pass.word";
             const dummy = {name: dummyName, email: dummyEmail};
             before((done) => {
-                calls.regiterDummy(dummy)
+                calls.registerDummy(dummy)
                 .then(_ => done()) // Ignore response parameter
                 .catch(_ => done()); // Avoid error handling and tests fails
             });
@@ -90,7 +90,7 @@ describe('Logger tests', () => {
             const dummyWithoutPassword = {name: dummyName, email: dummyEmail};
             before(
                 (done) => {
-                    calls.regiterDummy(dummy)
+                    calls.registerDummy(dummy)
                     .then(
                         _ => 
                             calls.loginDummy(dummy)
@@ -125,7 +125,7 @@ describe('Logger tests', () => {
             const dummy = {name: dummyName, password: dummyPassword, email: dummyEmail};
             before(
                 (done) => {
-                    calls.regiterDummy(dummy)
+                    calls.registerDummy(dummy)
                     .then(
                         _ => 
                             calls.loginDummyWithToken(process.env.TOKEN_OLD_TEST)

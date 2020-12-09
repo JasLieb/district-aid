@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:bloc/bloc.dart';
-import 'package:nowaste/navigation/bloc/navigation.dart';
+
+import 'navigation.dart';
 
 class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
-
   NavigationBloc() : super(AppNotInitializedState());
 
   @override
@@ -12,7 +12,7 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
     NavigationEvent event,
   ) async* {
     if (event is AppStarted) {
-      if(kIsWeb) {
+      if (kIsWeb) {
         await Future.delayed(new Duration(seconds: 2));
         yield WebAppInitializedState();
       } else {

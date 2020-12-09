@@ -1,6 +1,6 @@
-# Front - nowaste
+# Front - District Aid
 
-Nowaste Flutter implementation for currently Android SDK 16 (or 19 for emulator) and web deployment.
+District Aid Flutter implementation for currently Android SDK 16 (or 19 for emulator) and web deployment.
 
 ## Getting Started
 * Have Chrome installed (for web development and tools)
@@ -14,7 +14,7 @@ Nowaste Flutter implementation for currently Android SDK 16 (or 19 for emulator)
 
 * Follow [**Building a web application with Flutter**](https://flutter.dev/docs/get-started/web) steps to enable web app development
 
-    Please **Add web support to an existing app** section. Nowaste flutter app is already supported.<br/>
+    Please **Add web support to an existing app** section. District Aid flutter app is already supported.<br/>
     Becareful, after doing these steps, you will work with a Flutter Beta version, stil in development.
 
 

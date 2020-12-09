@@ -1,15 +1,14 @@
 import 'package:dio/dio.dart';
 
 class HttpBaseClient {
-  
   Dio dio;
 
   HttpBaseClient() {
     // or new Dio with a BaseOptions instance.
     BaseOptions options = new BaseOptions(
-        baseUrl: "https://www.nowaste.jaslieb.com/api/",
-        connectTimeout: 5000,
-        receiveTimeout: 3000,
+      baseUrl: "https://www.nowaste.jaslieb.com/api/",
+      connectTimeout: 5000,
+      receiveTimeout: 3000,
     );
 
     dio = new Dio(options);
