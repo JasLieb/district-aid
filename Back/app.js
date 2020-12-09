@@ -9,7 +9,7 @@ var pointsRouter = require('./routes/interestPointsRoute');
 
 var app = express();
 
-app.use(logger);
+app.use(logger.morgan);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -22,7 +22,7 @@ app.use('/api/points', pointsRouter);
 // error handler
 // TODO Log system into files one for errors, for auth, login ...
 app.use(function(err, req, res, next) {
-  console.log(err);
+  logger.log.error(err);
   if(err.message)
     res.locals.message = err.message;
   else
