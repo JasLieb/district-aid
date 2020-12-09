@@ -69,7 +69,7 @@ const loginDummyWithDataAndToken = (token, data) => {
     });
 }
 
-const deleteDummy = (data) =>
+const cleanDummyUser = (data) =>
     new Promise((resolve, error) => {
         db.query(`delete from users where name='${data.name}' and email='${data.email}'`) 
         .then(res => { resolve(); })
@@ -83,5 +83,5 @@ module.exports = {
     loginDummy,
     loginDummyWithToken,
     loginDummyWithDataAndToken,
-    deleteDummy
+    cleanDummyUser
 }

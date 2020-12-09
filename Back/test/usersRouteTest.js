@@ -18,7 +18,7 @@ describe('/user tests', () => {
         });
 
         it('POST /register expect response have status 200', (done) => {
-            assert.equal(response.status, 200);
+            assert.strictEqual(response.status, 200);
             done();
         });
 
@@ -28,7 +28,7 @@ describe('/user tests', () => {
         });
 
         after((done) => {
-            calls.deleteDummy(dummy).then(done).catch(done);
+            calls.cleanDummyUser(dummy).then(done).catch(done);
         });
     });
 
@@ -54,7 +54,7 @@ describe('/user tests', () => {
         );
 
         it('POST /login without token expect response have status 200', (done) => {
-            assert.equal(response.status, 200);
+            assert.strictEqual(response.status, 200);
             done();
         });
 
@@ -64,7 +64,7 @@ describe('/user tests', () => {
         });
 
         after((done) => {
-            calls.deleteDummy(dummy).then(done).catch(done);
+            calls.cleanDummyUser(dummy).then(done).catch(done);
         });
     });
 
@@ -91,7 +91,7 @@ describe('/user tests', () => {
         });
 
         it('#POST /login with token expect response have status 200', (done) => {
-            assert.equal(response.status, 200);
+            assert.strictEqual(response.status, 200);
             done();
         });
 
@@ -101,7 +101,7 @@ describe('/user tests', () => {
         });
 
         after((done) => {
-            calls.deleteDummy(dummy).then(done).catch(done);
+            calls.cleanDummyUser(dummy).then(done).catch(done);
         });
     });
 
@@ -128,7 +128,7 @@ describe('/user tests', () => {
         });
 
         it('#POST /login with old token and data expects response have status 200', (done) => {
-            assert.equal(response.status, 200);
+            assert.strictEqual(response.status, 200);
             done();
         });
 
@@ -138,7 +138,7 @@ describe('/user tests', () => {
         });
 
         after((done) => {
-            calls.deleteDummy(dummy).then(done).catch(done);
+            calls.cleanDummyUser(dummy).then(done).catch(done);
         });
     });
 
@@ -157,12 +157,12 @@ describe('/user tests', () => {
         });
 
         it('#POST /login with old token without data expects response have status 500', (done) => {
-            assert.equal(response.status, 500);
+            assert.strictEqual(response.status, 500);
             done();
         });
 
         it('#POST /login with old token without data expects contains message about log in again', (done) => {
-            assert.equal(response.error.text, '401 : Please sign in again');
+            assert.strictEqual(response.error.text, '401 : Please sign in again');
             done();
         });
     });
@@ -185,12 +185,12 @@ describe('/user tests', () => {
         });
 
         it('#POST /login with unknown token with data expects response have status 200', (done) => {
-            assert.equal(response.status, 500);
+            assert.strictEqual(response.status, 500);
             done();
         });
 
         it('#POST /login with unknown token and data expects contains message about log in again', (done) => {
-            assert.equal(response.error.text, '401 : Please sign in again');
+            assert.strictEqual(response.error.text, '401 : Please sign in again');
             done();
         });
     });
@@ -209,12 +209,12 @@ describe('/user tests', () => {
         });
 
         it('#POST /login with old token with data expects response have status 500', (done) => {
-            assert.equal(response.status, 500);
+            assert.strictEqual(response.status, 500);
             done();
         });
 
         it('#POST /login with old token with data expects contains message about log in again', (done) => {
-            assert.equal(response.error.text, '401 : Please sign in again');
+            assert.strictEqual(response.error.text, '401 : Please sign in again');
             done();
         });
     });

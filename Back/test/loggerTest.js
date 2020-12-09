@@ -76,7 +76,7 @@ describe('Logger tests', () => {
             });
 
             after((done) => {
-                calls.deleteDummy(dummy).then(done).catch(done);
+                calls.cleanDummyUser(dummy).then(done).catch(done);
             });
         });
     });
@@ -114,7 +114,7 @@ describe('Logger tests', () => {
             });
 
             after((done) => {
-                calls.deleteDummy(dummy).then(done).catch(done);
+                calls.cleanDummyUser(dummy).then(done).catch(done);
             });
         });
 
@@ -148,7 +148,7 @@ describe('Logger tests', () => {
             });
 
             after((done) => {
-                calls.deleteDummy(dummy).then(done).catch(done);
+                calls.cleanDummyUser(dummy).then(done).catch(done);
             });
         });
     });
