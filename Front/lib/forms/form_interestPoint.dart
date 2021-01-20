@@ -33,6 +33,7 @@ class FormScreenState extends State<FormScreen> {
         });
   }
 
+// A FAIRE : Définir les types possibles
   Widget _buildTypeField() {
     return TextFormField(
         decoration: InputDecoration(labelText: 'Type'),
@@ -47,6 +48,7 @@ class FormScreenState extends State<FormScreen> {
         });
   }
 
+// A FAIRE : Trouver un moyen de choisir une location
   Widget _buildLocationField() {
     return TextFormField(
         decoration: InputDecoration(labelText: 'Location'),
@@ -61,6 +63,7 @@ class FormScreenState extends State<FormScreen> {
         });
   }
 
+// A FAIRE : Ajouter un TextField avec la date
   Widget _buildDueDateField(BuildContext context) {
     return RaisedButton(
       child: Text('Pick a date'),
@@ -79,18 +82,6 @@ class FormScreenState extends State<FormScreen> {
     );
   }
 
-  //return TextFormField(
-  //    decoration: InputDecoration(labelText: 'Due Date'),
-  //    validator: (String value) {
-  //      if (value.isEmpty) {
-  //        return 'Due Date is required';
-  //      }
-  //      return null;
-  //    },
-  //    onSaved: (String value) {
-  //      _location = value;
-  //    });
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,6 +93,7 @@ class FormScreenState extends State<FormScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              //Création des boutons et inputfields
               _buildNameField(),
               _buildTypeField(),
               _buildLocationField(),
@@ -112,16 +104,17 @@ class FormScreenState extends State<FormScreen> {
                   'Submit',
                   style: TextStyle(color: Colors.blue, fontSize: 16),
                 ),
+                //  Validation
                 onPressed: () {
                   if (!_formKey.currentState.validate()) {
                     return;
                   }
 
                   _formKey.currentState.save();
-
-                  print(_location);
-                  print(_name);
-                  print(_type);
+                  // Création du point d'interet
+                  InterestPoint interestPoint = new InterestPoint(
+                      'idNb', null, _name, DateTime.now(), _dueDate, _type);
+                  // A FAIRE : Reste à l'ajouter à la liste
                 },
               )
             ],
