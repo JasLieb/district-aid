@@ -9,6 +9,7 @@ dependencies:
   flutter:
     sdk: flutter
   bloc: ^6.0.3
+  geolocator: ^6.2.1
   cupertino_icons: ^1.0.0
   dio: ^3.0.10
   flutter_bloc: ^6.0.6

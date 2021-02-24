@@ -6,7 +6,7 @@ class HttpBaseClient {
   HttpBaseClient() {
     // or new Dio with a BaseOptions instance.
     BaseOptions options = new BaseOptions(
-      baseUrl: "https://www.nowaste.jaslieb.com/api/",
+      baseUrl: "https://district-aid-back.herokuapp.com/api/",
       connectTimeout: 5000,
       receiveTimeout: 3000,
     );
@@ -35,9 +35,12 @@ class HttpBaseClient {
     // );
   }
 
-  Future<Response> getRequest(String route, {options = ''}) async {
+  Future<Response> getRequest(
+      String route, Map<String, dynamic> queryParameters) async {
     try {
-      Response res = await dio.get(route);
+      Response res = queryParameters != null
+          ? await dio.get(route, queryParameters: queryParameters)
+          : await dio.get(route);
       return res;
       //return Future.wait(res);//dio.resolve(res.data);
     } catch (e) {
