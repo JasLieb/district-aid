@@ -10,11 +10,13 @@ import 'bloc/map_bloc.dart';
 class Map extends StatelessWidget {
   static const String route = '/';
   final _mapBloc = MapBloc()..add(MapInitializationEvent());
-  final position = new Position(51.5, -0.09);
+  final MapController mapController = new MapController();
 
   @override
   Widget build(BuildContext context) {
+    Position position = new Position(51.5, -0.09);
     var markers = <Marker>[];
+
     return Scaffold(
         appBar: AppBar(title: Text('district-aid - Accueil')),
         body: BlocBuilder<MapBloc, MapState>(
@@ -23,6 +25,14 @@ class Map extends StatelessWidget {
             if (state is MapDisplayState) {
               markers.clear();
               markers.addAll(_makeMarkers(state.interestPoints));
+              if (state.position != null) {
+                position = new Position(
+                    state.position.latitude, state.position.longitude);
+                mapController.fitBounds(new LatLngBounds(
+                    LatLng(position.lat + 0.5, position.lng + 0.5),
+                    LatLng(position.lat - 0.5, position.lng - 0.5)));
+                mapController.move(LatLng(position.lat, position.lng), 13.5);
+              }
             }
 
             return Padding(
@@ -35,19 +45,21 @@ class Map extends StatelessWidget {
                 Row(children: [
                   ToggleButtons(
                     children: <Widget>[Icon(Icons.info_outline)],
-                    onPressed: (_) => _mapBloc..add(MapShowPointsEvent(!state.pointsAreVisible)),
+                    onPressed: (_) => _mapBloc
+                      ..add(MapShowPointsEvent(!state.pointsAreVisible)),
                     isSelected: [state.pointsAreVisible],
                   ),
                 ]),
                 Flexible(
                   child: FlutterMap(
+                    mapController: mapController,
                     options: MapOptions(
-                        center: LatLng(43.60444832310661, 1.4433717727661133),
+                        center: LatLng(position.lat, position.lng),
                         onLongPress: _handleLongPress,
                         nePanBoundary:
-                            LatLng(43.72049745570917, 1.522979736328125),
+                            LatLng(position.lat + 0.5, position.lng + 0.5),
                         swPanBoundary:
-                            LatLng(43.46089378008257, 1.3128662109375)),
+                            LatLng(position.lat - 0.5, position.lng - 0.5)),
                     layers: [
                       new TileLayerOptions(
                         urlTemplate: "https://api.mapbox.com/styles/v1/jaslieb"

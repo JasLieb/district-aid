@@ -9,9 +9,13 @@ abstract class MapState {
 }
 
 class MapInitialState extends MapState {
-  MapInitialState(List<LatLng> interestPoints, bool pointsAreVisible) : super(interestPoints, pointsAreVisible);
+  MapInitialState(List<LatLng> interestPoints, bool pointsAreVisible)
+      : super(interestPoints, pointsAreVisible);
 }
 
 class MapDisplayState extends MapState {
-  MapDisplayState(List<LatLng> interestPoints, bool pointsAreVisible) : super(interestPoints, pointsAreVisible);
+  final Position position;
+  MapDisplayState(
+      List<LatLng> interestPoints, bool pointsAreVisible, this.position)
+      : super(interestPoints, pointsAreVisible);
 }
