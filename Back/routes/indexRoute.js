@@ -2,9 +2,12 @@ const fs = require('fs');
 const express = require('express');
 const router = express.Router();
 
-/* GET home page. */
 router.get('/', function (req, res, next) {
   res.redirect('/web/');
+});
+
+router.get('/web', function (req, res, next) {
+  res.end();
 });
 
 router.get('/downloads', function (req, res, next) {

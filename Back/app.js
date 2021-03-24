@@ -4,6 +4,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('./middlewares/logger');
 var cors = require('cors')
 var config = require('./config');
+var db = require('./factories/mongoFactory');
 
 var indexRouter = require('./routes/indexRoute');
 var usersRouter = require('./routes/usersRoute');

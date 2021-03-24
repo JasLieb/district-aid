@@ -1,32 +1,25 @@
-const db = require('../factories/databaseMariaFactory');
+const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
 const getNewToken = (id) => 'Bearer ' + jwt.sign({ _id: id }, process.env.JWTSECRETKEY, { expiresIn: "1 days" });
 
 const hashPassword = async (password) => {
-    try {
-        return new Promise((resolve, reject) => {
-            bcrypt.hash(password, 10, (err, hash) => {
-                if(err) reject(err);
-                else resolve(hash);
-            });
-        })
-    } catch (error) {
-        throw error
-    }
+    return new Promise((resolve, reject) => {
+        bcrypt.hash(password, 10, (err, hash) => {
+            if(err) reject(err);
+            else resolve(hash);
+        });
+    })
 };
 
 const classicLogin = async (user) => {
-    try {
-        var query =  `SELECT * FROM users WHERE email='${user.email}' `;
-        var userFound =  await db.queryOne(query);
-        if(await bcrypt.compare(user.password, userFound.password)) {
-            return getNewToken(userFound.id);
-        }
-    } catch (error) {
-        /// TODO throw errors with status attribute !!!
-        throw error;
+    var userFound = await User.findOne({
+        email: user.email
+    })
+    console.log(userFound);
+    if(await bcrypt.compare(user.password, userFound.password)) {
+        return getNewToken(userFound._id);
     }
 };
 
@@ -35,8 +28,9 @@ const tokenLogin = async (user) => {
     try {
         const token = user.token.replace('Bearer', '').trim();
         const decoded = jwt.verify(token, process.env.JWTSECRETKEY);
-        var query = `SELECT * FROM users where id=${decoded._id}`;
-        userFound = await db.queryOne(query);
+        userFound = User.findOne({
+            _id: decoded._id
+        });
 
         if(userFound){
             return token;
