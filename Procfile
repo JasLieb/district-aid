@@ -1,1 +1,1 @@
-web: node ./Back/bin/www
+web: cd ./Back && node ./bin/www
