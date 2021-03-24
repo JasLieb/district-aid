@@ -35,7 +35,8 @@ class Map extends StatelessWidget {
                 Row(children: [
                   ToggleButtons(
                     children: <Widget>[Icon(Icons.info_outline)],
-                    onPressed: (_) => _mapBloc..add(MapShowPointsEvent(!state.pointsAreVisible)),
+                    onPressed: (_) => _mapBloc
+                      ..add(MapShowPointsEvent(!state.pointsAreVisible)),
                     isSelected: [state.pointsAreVisible],
                   ),
                 ]),
