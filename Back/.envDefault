@@ -6,11 +6,4 @@ TOKEN_UNKOWN_TEST=aaa
 # Set your JTW secret key information here
 # Template contains default value for development purpose only
 JWTSECRETKEY=district-aid
-# Set your database connection information here
-DB_USER=
-DB_PASSWORD=
-DB_NAME=
-# If localhost use 127.0.0.1
-DB_HOST=
-# 3306 by default
-DB_PORT=
+MONGO_KEY=

@@ -1,7 +1,8 @@
 var app = require('../../app');
 var request = require('supertest');
 var agent = request.agent(app);
-var db = require('../../factories/databaseMariaFactory');
+var InterestPoint = require('../../models/interestPointsModel');
+var User = require('../../models/userModel');
 
 const getPoints = () => {
     return new Promise((resolve, error) => {
@@ -13,10 +14,40 @@ const getPoints = () => {
     });
 }
 
-const getPointsNear = (position) => {
+const createPoint = (data) => {
     return new Promise((resolve, error) => {
-        agent.get('/api/points/nearMe')
-        .send({position})
+        agent.post('/api/points/')
+        .send(data)
+        .end((err, res) => {
+            if(err) error(err);
+            else resolve(res);
+        });
+    });
+}
+
+const deletePoint = (data) => {
+    return new Promise((resolve, error) => {
+        agent.delete('/api/points/')
+        .send(data)
+        .end((err, res) => {
+            if(err) error(err);
+            else resolve(res);
+        });
+    });
+}
+
+const cleanDummyPoint = (data) =>
+    new Promise((resolve, error) => {
+        InterestPoint.deleteMany({
+            name: data.name
+        })
+        .then(res => { resolve(); })
+        .catch(err => { error(err); });
+    });
+
+const getPointsNear = (position, maxDistance) => {
+    return new Promise((resolve, error) => {
+        agent.get(`/api/points/nearMe?lat=${position.lat}&lng=${position.lng}&maxDistance=${maxDistance}`)
         .end((err, res) => {
             if(err) error(err);
             else resolve(res);
@@ -69,19 +100,24 @@ const loginDummyWithDataAndToken = (token, data) => {
     });
 }
 
-const deleteDummy = (data) =>
+const cleanDummyUser = (data) =>
     new Promise((resolve, error) => {
-        db.query(`delete from users where name='${data.name}' and email='${data.email}'`) 
+        User.deleteOne({
+            name: data.name
+        })
         .then(res => { resolve(); })
         .catch(err => { error(err); });
     });
 
 module.exports = {
     getPoints,
+    createPoint,
+    deletePoint,
+    cleanDummyPoint,
     getPointsNear,
     registerDummy,
     loginDummy,
     loginDummyWithToken,
     loginDummyWithDataAndToken,
-    deleteDummy
+    cleanDummyUser
 }

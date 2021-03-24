@@ -19,6 +19,9 @@ const checkHeader = (headers) => {
     return JSON.stringify(checkedHeaders);
 };
 
+// See https://github.com/winstonjs/winston/issues/614
+// Adding logger for a specific level
+
 const logger = createLogger({
     format: format.combine(
         format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss:ms' }),
@@ -32,11 +35,18 @@ const logger = createLogger({
             maxFiles: 5
         }),
         new transports.File({
+            filename: './logs/error-logs.log',
+            json: false,
+            maxsize: 5242880,
+            maxFiles: 5,
+            level: 'error'
+        }),
+        new transports.File({
             filename: './logs/http-logs.log',
             json: false,
             maxsize: 5242880,
             maxFiles: 5,
-            level: 'http'
+            level: 'info'
         }),
         new transports.Console()
     ]
@@ -62,7 +72,10 @@ logger.stream = {
     }
 };
 
-module.exports = morgan(
-    morganFormat,
-    { stream: logger.stream }
-);
+module.exports = {
+    log: logger,
+    morgan: morgan(
+        morganFormat,
+        { stream: logger.stream }
+    )
+}
