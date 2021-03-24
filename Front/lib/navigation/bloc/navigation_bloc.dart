@@ -12,16 +12,11 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
     NavigationEvent event,
   ) async* {
     if (event is AppStarted) {
+      await Future.delayed(new Duration(seconds: 3));
       if (kIsWeb) {
-        await Future.delayed(new Duration(seconds: 2));
         yield WebAppInitializedState();
       } else {
-        try {
-          await Future.delayed(new Duration(seconds: 2));
-          yield AppInitializedState();
-        } catch (e) {
-          print(e);
-        }
+        yield AppInitializedState();
       }
     }
   }
