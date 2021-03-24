@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:latlong/latlong.dart';
-
 import '../../httpClients/httpBaseClient.dart';
 import '../../models/interestPoint.dart';
 
