@@ -1,0 +1,444 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "District Aid",
+        "description": "District Aid Application API",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "tags": [
+        {
+            "name": "Users",
+            "description": "API for Users in the system"
+        },
+        {
+            "name": "InterestPoint",
+            "description": "API for InterestPoints in the system"
+        },
+        {
+            "name": "TODO EXAMPLE",
+            "description": "Some fake routes TODO or for example"
+        }
+    ],
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/api/points/": {
+            "get": {
+                "tags": [
+                    "InterestPoint"
+                ],
+                "description": "Get all InterestPoints in system",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "All InterestPoints",
+                        "schema": {
+                            "$ref": "#/definitions/InterestPoints"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "InterestPoint"
+                ],
+                "description": "Create an InterestPoints in system",
+                "parameters": [
+                    {
+                        "name": "_body",
+                        "in": "body",
+                        "description": "InterestPoint that we want to create",
+                        "schema": {
+                            "$ref": "#/definitions/InterestPointAdd"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "InterestPoint just created",
+                        "schema": {
+                            "$ref": "#/definitions/InterestPoint"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "InterestPoint"
+                ],
+                "description": "Delete an InterestPoints in system",
+                "parameters": [
+                    {
+                        "name": "_body",
+                        "in": "body",
+                        "description": "The ID's InterestPoint that we want to delete",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/points/nearMe": {
+            "get":{
+                "tags": [
+                    "InterestPoint"
+                ],
+                "description": "Get all InterestPoints around a position and a distance",
+                "parameters": [
+                    {
+                        "name": "lat",
+                        "in": "query",
+                        "description": "The latitude position",
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "lng",
+                        "in": "query",
+                        "description": "The longitude position",
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "maxDistance",
+                        "in": "query",
+                        "description": "The maximum distance from the user location in meters",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200":{
+                        "description": "All InterestPoints around the position",
+                        "schema": {
+                            "$ref": "#/definition/InterestPoints"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/register/": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "description": "Create new user in system",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "body",
+                        "description": "User that we want to create",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "New user is created",
+                        "schema": {
+                            "properties": {
+                                "token": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/login": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Log an user and return a token",
+                "parameters": [
+                    {
+                        "name": "_body",
+                        "in": "body",
+                        "description": "User that we want to log",
+                        "schema": {
+                            "$ref": "#/definitions/UserLog"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Sign in needed, wrong password, email or token"
+                    }
+                }
+            }
+        },
+        "/api/users/": {
+            "get": {
+                "tags": [
+                    "TODO EXAMPLE"
+                ],
+                "summary": "Get all users in system",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Users"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of user that we want to find",
+                    "type": "integer"
+                }
+            ],
+            "delete": {
+                "summary": "Delete user with given ID",
+                "tags": [
+                    "TODO EXAMPLE"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User is deleted",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update user with give ID",
+                "tags": [
+                    "TODO EXAMPLE"
+                ],
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "body",
+                        "description": "User with new values of properties",
+                        "schema": {
+                            "$ref": "#/definitions/updateUser"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User is updated",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "InterestPoints": {
+            "type": "array",
+            "$ref": "#/definitions/InterestPoint"
+        },
+        "InterestPoint":{
+            "required": [
+                "type",
+                "geometry",
+                "properties"
+            ],
+            "properties": {
+                "_id": {
+                    "type": "string",
+                    "uniqueItems": true
+                },
+                "type": {
+                    "type": "string"
+                },
+                "geometry": {
+                    "$ref": "#/definitions/InterestPointGeometry"
+                },
+                "properties": {
+                    "$ref": "#/definitions/InterestPointProperties"
+                }
+            }
+        },
+        "InterestPointAdd":{
+            "required": [
+                "type",
+                "geometry",
+                "properties"
+            ],
+            "properties": {
+                "type": {
+                    "type": "string"
+                },
+                "geometry": {
+                    "$ref": "#/definitions/InterestPointGeometry"
+                },
+                "properties": {
+                    "$ref": "#/definitions/InterestPointProperties"
+                }
+            }
+        },
+        "InterestPointGeometry":{
+            "required": [
+                "type",
+                "geometry",
+                "properties"
+            ],
+            "properties": {
+                "type": {
+                    "type": "string"
+                },
+                "geometry": {
+                    "$ref": "#/definitions/InterestPointGeometry"
+                },
+                "properties": {
+                    "$ref": "#/definitions/InterestPointProperties"
+                }
+            }
+        },
+        "InterestPointProperties":{
+            "required": [
+                "type",
+                "geometry",
+                "properties"
+            ],
+            "properties": {
+                "type": {
+                    "type": "string"
+                },
+                "geometry": {
+                    "$ref": "#/definitions/InterestPointGeometry"
+                },
+                "properties": {
+                    "$ref": "#/definitions/InterestPointProperties"
+                }
+            }
+        },
+        "LatLng": {
+            "required": [
+                "name",
+                "email",
+                "password",
+                "creation_date"
+            ],
+            "properties": {
+                "lat": {
+                    "type": "number"
+                },
+                "lng": {
+                    "type": "number"
+                }
+
+            }
+        },
+        "User": {
+            "required": [
+                "name",
+                "email",
+                "password",
+                "creation_date"
+            ],
+            "properties": {
+                "_id": {
+                    "type": "string",
+                    "uniqueItems": true
+                },
+                "email": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "creation_date": {
+                    "type": "string"
+                }
+            }
+        },
+        "LoggedUser": {
+            "properties": {
+                "_id": {
+                    "type": "string",
+                    "uniqueItems": true
+                },
+                "email": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "creation_date": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                }
+            }
+        },
+        "Users": {
+            "type": "array",
+            "$ref": "#/definitions/User"
+        },
+        "UserLog": {
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

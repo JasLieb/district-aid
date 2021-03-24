@@ -1,7 +1,6 @@
 # Env file
 *.env
 
-Back/web/
 # Downloads folder
 */downloads/
 

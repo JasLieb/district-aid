@@ -10,6 +10,7 @@ var indexRouter = require('./routes/indexRoute');
 var usersRouter = require('./routes/usersRoute');
 var pointsRouter = require('./routes/interestPointsRoute');
 
+const swaggerUi = require('swagger-ui-express');
 
 var app = express();
 
@@ -23,6 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/points', pointsRouter);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(require('./swagger.json')));
 
 // error handler
 // TODO Log system into files one for errors, for auth, login ...
