@@ -72,8 +72,14 @@ Between the bloc and the view (page widget), we have to imagine a unilateral pip
 - Make Flutter tests
 - Improve the DevOps workflow
 
+## Projects links
+
+- [Project board - Trello](https://trello.com/b/mUDQ5NGh/scrumb-board)
+- [Project design - Figma](https://www.figma.com/file/CTubLI8MVoVEeWumkrzwFc/District-Aid?node-id=0%3A1)
+- [Project marketing website - WordPress](https://solenn-albiol.com/Projects/District-Aid/)
+- [Project communication, design and marketing resource - Drive](https://drive.google.com/file/d/1Q3Lk0iDPnqQfbeuihP2pSwOiWlgGHtqy/view?usp=sharing)
+
 ## Useful links
 
 - [Release into Heroku](https://dev.to/pacheco/how-to-dockerize-a-node-app-and-deploy-to-heroku-3cch)
-
 - [Flutter and Docker workspace](https://medium.com/@cezary.zelisko/how-to-prepare-a-flutter-workspace-in-a-docker-container-e56e0c7c7dcd)
