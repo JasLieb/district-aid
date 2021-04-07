@@ -4,12 +4,8 @@ env:
   TOKEN_UNKOWN_TEST: ${{ secrets.TOKEN_UNKOWN_TEST }}
   TOKEN_OLD_TEST: ${{ secrets.TOKEN_OLD_TEST }}
   JWTSECRETKEY: ${{ secrets.JWTSECRETKEY }}
+  MONGO_KEY: ${{ secrets.MONGO_KEY }}
   NODE_ENV: test
-  DB_HOST: "::1"
-  DB_USER: developer
-  DB_PASSWORD: rootPowa
-  DB_NAME: test
-  DB_PORT: 3307
   CI: true
 
 on:
@@ -29,42 +25,14 @@ jobs:
       matrix:
         node-version: [10.17.0]
 
-    services:
-      mariadb:
-        image: mariadb:latest
-        env:
-          MYSQL_USER: developer
-          MYSQL_PASSWORD: rootPowa
-          MYSQL_DATABASE: test
-          MYSQL_ROOT_PASSWORD: password
-        ports:
-          - 3307:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=2s --health-retries=3
-
     steps:
 
       - uses: actions/checkout@v2
-
-      # - name: Generate build number
-      #   id: buildnumber
-      #   uses: einaregilsson/build-number@v2 
-      #   with:
-      #     prefix: nowaste
-      #     token: ${{ secrets.GITHUB_TOKEN }}
-      # - name: Shutdown Ubuntu MySQL (SUDO)
-      #   run: sudo service mysql stop
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-
-      - name: Restat Ubuntu MySQL Service (SUDO)
-        run: sudo service mysql restart
-
-      - name: Setup MariaDB data
-        working-directory: ./Db
-        run: mysql -h"::1" -P"3307" -u developer -prootPowa test < './districtaid_export.sql'
 
       - name: Install Node.js Application 
         working-directory: ./Back
